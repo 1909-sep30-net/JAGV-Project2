@@ -12,6 +12,8 @@ namespace Project2JAGV.DataAccess.Entities
         }
         public int Id { get; set; }
         public int CostumerId { get; set; }
-        public ICollection<Pizzas> Pizzas { get; set; }
+
+        public virtual Customers customer { get; set; }
+        public virtual ICollection<Pizzas> Pizzas { get; set; }
     }
 }

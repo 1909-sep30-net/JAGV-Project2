@@ -15,6 +15,6 @@ namespace Project2JAGV.DataAccess.Entities
         public string State { get; set; }
         public string ZipCode { get; set; }
 
-        public ICollection<Customers> Customers { get; set; }
+        public virtual ICollection<Customers> Customers { get; set; }
     }
 }

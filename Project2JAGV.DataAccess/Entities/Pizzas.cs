@@ -12,8 +12,6 @@ namespace Project2JAGV.DataAccess.Entities
         }
         public int Id { get; set; }
         public string Name { get; set; }
-        public int CrustType { get; set; }
-        public int SauceType { get; set; }
 
         public virtual ICollection<PizzaIngredients> Ingredients { get; set; }
     }
