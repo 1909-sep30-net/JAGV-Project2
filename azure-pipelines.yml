@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 
 variables:
@@ -33,10 +33,6 @@ steps:
   inputs:
     command: 'test'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
 
 - task: SonarCloudAnalyze@1
 
