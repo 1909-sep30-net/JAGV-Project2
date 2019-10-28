@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 
 variables:
@@ -15,6 +15,25 @@ variables:
 
 steps:
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloudService'
+    organization: 'jhmohrbachersonarcloud'
+    scannerMode: 'MSBuild'
+    projectKey: 'jhmohrbachersonarcloud'
+    projectName: 'JAGVProject2'
+    extraProperties: |
+     sonar.exclusions=**/lib/**
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-  workingDirectory: ./
+  workingDirectory: './'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
