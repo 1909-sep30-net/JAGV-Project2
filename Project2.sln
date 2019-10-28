@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2JAGV.DataAccess", "Project2JAGV.DataAccess\Project2JAGV.DataAccess.csproj", "{B101E7E1-C7DF-442C-8DD8-8FA0F72DE685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2JAGV.DataAccess", "Project2JAGV.DataAccess\Project2JAGV.DataAccess.csproj", "{B101E7E1-C7DF-442C-8DD8-8FA0F72DE685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2JAGV.ObjectLogic", "Project2JAGV.ObjectLogic\Project2JAGV.ObjectLogic.csproj", "{011CE741-20CA-4EAA-9FE9-78C93A4555CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2JAGV.ObjectLogic", "Project2JAGV.ObjectLogic\Project2JAGV.ObjectLogic.csproj", "{011CE741-20CA-4EAA-9FE9-78C93A4555CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2JAGV.Consele", "Project2JAGV.Consele\Project2JAGV.Consele.csproj", "{CEC9363C-0B0F-48EB-BEB7-91EF9FFE6858}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2JAGV.Consele", "Project2JAGV.Consele\Project2JAGV.Consele.csproj", "{CEC9363C-0B0F-48EB-BEB7-91EF9FFE6858}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2JAGV.Test", "Project2JAGV.Test\Project2JAGV.Test.csproj", "{3BAE3EFD-51D2-4AAF-85F6-22279E853397}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,18 @@ Global
 		{CEC9363C-0B0F-48EB-BEB7-91EF9FFE6858}.Release|x64.Build.0 = Release|Any CPU
 		{CEC9363C-0B0F-48EB-BEB7-91EF9FFE6858}.Release|x86.ActiveCfg = Release|Any CPU
 		{CEC9363C-0B0F-48EB-BEB7-91EF9FFE6858}.Release|x86.Build.0 = Release|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Debug|x64.Build.0 = Debug|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Debug|x86.Build.0 = Debug|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Release|x64.ActiveCfg = Release|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Release|x64.Build.0 = Release|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Release|x86.ActiveCfg = Release|Any CPU
+		{3BAE3EFD-51D2-4AAF-85F6-22279E853397}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
