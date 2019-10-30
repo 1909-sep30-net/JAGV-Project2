@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project2JAGV.DataAccess.Entities
 {
@@ -11,6 +10,7 @@ namespace Project2JAGV.DataAccess.Entities
             Ingredients = new HashSet<Ingredients>();
         }
 
+        [Key]
         public int Id { get; set; }
         public string Type { get; set; }
 

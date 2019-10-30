@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Project2JAGV.Consele\Project2JAGV.Consele.csproj" />
     <ProjectReference Include="..\Project2JAGV.DataAccess\Project2JAGV.DataAccess.csproj" />
     <ProjectReference Include="..\Project2JAGV.ObjectLogic\Project2JAGV.ObjectLogic.csproj" />
   </ItemGroup>
