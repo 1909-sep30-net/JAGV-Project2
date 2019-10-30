@@ -42,9 +42,9 @@ namespace Project2JAGV.DataAccess.Entities
 
             modelBuilder.Entity<Ingredients>(entity =>
             {
+                entity.Property(e => e.TypeId).IsRequired();
                 entity.Property(e => e.Name).IsRequired();
                 entity.Property(e => e.Price).HasColumnType("money");
-
             });
 
             modelBuilder.Entity<IngredientTypes>(entity =>
