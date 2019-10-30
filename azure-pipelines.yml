@@ -18,10 +18,10 @@ steps:
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'SonarCloudService'
-    organization: 'jhmohrbachersonarcloud'
+    organization: '1909-sep30-net'
     scannerMode: 'MSBuild'
-    projectKey: 'jhmohrbachersonarcloud'
-    projectName: 'JAGVProject2'
+    projectKey: 'Project2JAGV'
+    projectName: 'Project2JAGV'
     extraProperties: |
      sonar.exclusions=**/lib/**
 
