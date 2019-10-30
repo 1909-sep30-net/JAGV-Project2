@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project2JAGV.DataAccess.Entities
 {
@@ -11,6 +10,7 @@ namespace Project2JAGV.DataAccess.Entities
             PizzaDeliveries = new HashSet<PizzaDelivery>();
         }
 
+        [Key]
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

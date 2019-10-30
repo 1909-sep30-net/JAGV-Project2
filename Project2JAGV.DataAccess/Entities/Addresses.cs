@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Project2JAGV.DataAccess.Entities
 {
@@ -10,6 +9,8 @@ namespace Project2JAGV.DataAccess.Entities
         {
             Users = new HashSet<Users>();
         }
+
+        [Key]
         public int Id { get; set; }
         public string Street { get; set; }
         public string State { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project2JAGV.DataAccess.Entities
 {
@@ -10,10 +11,14 @@ namespace Project2JAGV.DataAccess.Entities
         {
             Pizzas = new HashSet<Pizzas>();
         }
-        public int Id { get; set; }
-        public int UserId { get; set; }
 
+        [Key]
+        public int Id { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public DateTime Date { get; set; }
         public virtual Users User { get; set; }
+        public virtual Drivers Driver { get; set; }
         public virtual ICollection<Pizzas> Pizzas { get; set; }
     }
 }
