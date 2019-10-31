@@ -6,6 +6,7 @@ namespace Project2JAGV.ObjectLogic
     {
         private int _id { get; set; }
         private string _street { get; set; }
+        private string _city { get; set; }
         private string _state { get; set; }
         private string _zipCode { get; set; }
         public int Id
@@ -28,6 +29,17 @@ namespace Project2JAGV.ObjectLogic
                     throw new ArgumentException("Street must not be empty");
 
                 _street = value;
+            }
+        }
+        public string City
+        {
+            get => _city;
+            set
+            {
+                if (value == "")
+                    throw new ArgumentException("City must not be empty");
+
+                _city = value;
             }
         }
         public string State
