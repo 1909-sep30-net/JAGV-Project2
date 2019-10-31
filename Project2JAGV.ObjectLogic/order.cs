@@ -2,13 +2,20 @@
 
 namespace Project2JAGV.ObjectLogic
 {
-    public class order
+    public class Order
     {
         private int _id;
         private int _userId;
         public int Id
         {
-            get => _id;
+            get
+            {
+
+                if (!(_id >= 0))
+                    throw new ArgumentNullException("Id is not set");
+
+                return _id;
+            }
             set
             {
                 if (value < 0)
@@ -21,7 +28,14 @@ namespace Project2JAGV.ObjectLogic
         }
         public int UserId
         {
-            get => _userId;
+            get
+            {
+
+                if (!(_userId >= 0))
+                    throw new ArgumentNullException("User Id is not set");
+
+                return _userId;
+            }
             set
             {
                 if (value < 0)
