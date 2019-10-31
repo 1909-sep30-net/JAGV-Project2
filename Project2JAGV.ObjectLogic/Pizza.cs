@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Project2JAGV.ObjectLogic
 {
-    public class Users
+    public class Pizza
     {
-        
-        private int _id { get; set; }
-
-        private string _firstName { get; set; }
-
-
+        private int _id;
+        private string _name;
         public int Id
         {
             get => _id;
@@ -19,23 +14,26 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("User Id can not be les than 0");
+                    throw new ArgumentException("Id must not be negative");
                 }
 
                 _id = value;
             }
         }
-
-        public string FirstName
+        public string Name
         {
-            get => _firstName;
+            get => _name;
             set
             {
                 if (value == "")
                 {
-                    throw new ArgumentException("Usernaem cannot be empty");
+                    throw new ArgumentException("Name must not be empty");
                 }
+
+                _name = value;
             }
         }
+
+        public ICollection<PizzaIngredient> PizzaIngredients { get; set; } = new List<PizzaIngredient>();
     }
 }

@@ -11,9 +11,7 @@ namespace Project2JAGV.DataAccess.Entities
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string UserPassword { get; set; }
-
         public bool Admin { get; set; }
-
-        public virtual Users User { get; set; }
+        public Users user { get; set; }
     }
 }

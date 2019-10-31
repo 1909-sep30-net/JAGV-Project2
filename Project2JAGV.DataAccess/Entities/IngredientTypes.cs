@@ -9,11 +9,9 @@ namespace Project2JAGV.DataAccess.Entities
         {
             Ingredients = new HashSet<Ingredients>();
         }
-
         [Key]
         public int Id { get; set; }
         public string Type { get; set; }
-
         public virtual ICollection<Ingredients> Ingredients { get; set; }
     }
 }

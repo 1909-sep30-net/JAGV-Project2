@@ -12,7 +12,6 @@ namespace Project2JAGV.DataAccess.Entities
         }
         [Key]
         public int Id { get; set; }
-
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public string FirstName { get; set; }
@@ -20,6 +19,5 @@ namespace Project2JAGV.DataAccess.Entities
         public virtual Logins Login { get; set; }
         public virtual Addresses Address { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
-
     }
 }

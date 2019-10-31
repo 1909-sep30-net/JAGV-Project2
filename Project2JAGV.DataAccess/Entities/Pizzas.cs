@@ -9,7 +9,6 @@ namespace Project2JAGV.DataAccess.Entities
         {
             Ingredients = new HashSet<PizzaIngredients>();
         }
-
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }

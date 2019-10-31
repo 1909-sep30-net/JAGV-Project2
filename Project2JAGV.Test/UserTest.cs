@@ -10,13 +10,13 @@ namespace Project2JAGV.Test
         [Fact]
         public void User_Test()
         {
-            Assert.Throws<ArgumentException>(() => new Users { Id = -1 });
+            Assert.Throws<ArgumentException>(() => new User { Id = -1 });
         }
 
         [Fact]
         public void User_Name_Empty()
         {
-            Assert.Throws<ArgumentException>(() => new Users { FirstName = "" });
+            Assert.Throws<ArgumentException>(() => new User { FirstName = "" });
         }
     }
 }

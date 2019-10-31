@@ -11,7 +11,6 @@ namespace Project2JAGV.DataAccess.Entities
         {
             Pizzas = new HashSet<Pizzas>();
         }
-
         [Key]
         public int Id { get; set; }
         [ForeignKey("User")]

@@ -17,7 +17,6 @@ namespace Project2JAGV.DataAccess.Entities
         public int TypeId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-
         public virtual IngredientTypes IngredientType { get; set;  }
         public virtual ICollection<PizzaIngredients> PizzaIngredients { get; set; }
     }
