@@ -6,6 +6,7 @@ namespace Project2JAGV.ObjectLogic
     {
         private int _id;
         private int _userId;
+        private int _delivererId;
         public int Id
         {
             get
@@ -46,6 +47,21 @@ namespace Project2JAGV.ObjectLogic
                 _userId = value;
             }
         }
+        public int DelivererId
+        {
+            get => _delivererId;
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("User Id must not be negative");
+                }
+
+                _delivererId = value;
+            }
+        }
+
+        public bool Delivered { get; set; }
         public DateTime Date { get; set; }
     }
 }
