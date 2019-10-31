@@ -50,12 +50,6 @@ namespace Project2JAGV.Test.ObjectLogicTests
         Address test_address = new Address();
 
         [Fact]
-        public void Address_Id_Get_Test()
-        {
-            Assert.ThrowsAny<ArgumentNullException>(() => test_address.Id);
-        }
-
-        [Fact]
         public void Address_Street_Get_Test()
         {
             Assert.ThrowsAny<ArgumentNullException>(() => test_address.Street);
