@@ -6,12 +6,13 @@ namespace Project2JAGV.DataAccess.Entities
     public partial class Logins
     {
         [Key]
-        public int Id { get; set; }
-        [ForeignKey("User")]
-        public int UserId { get; set; }
         public string UserName { get; set; }
         public string UserPassword { get; set; }
-        public bool Admin { get; set; }
-        public Users user { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        [ForeignKey("UserType")]
+        public int UserTypeId { get; set; }
+        public Users User { get; set; }
+        public UserTypes UserType { get; set; }
     }
 }

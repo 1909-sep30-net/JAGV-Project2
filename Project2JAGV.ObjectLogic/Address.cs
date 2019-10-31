@@ -64,6 +64,17 @@ namespace Project2JAGV.ObjectLogic
                 _street = value;
             }
         }
+        public string City
+        {
+            get => _city;
+            set
+            {
+                if (value == "")
+                    throw new ArgumentException("City must not be empty");
+
+                _city = value;
+            }
+        }
         public string State
         {
             get

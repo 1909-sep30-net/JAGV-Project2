@@ -75,7 +75,7 @@ namespace Project2JAGV.ObjectLogic
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("Prie must not be negative");
+                    throw new ArgumentException("Price must not be negative");
 
                 _price = value;
             }

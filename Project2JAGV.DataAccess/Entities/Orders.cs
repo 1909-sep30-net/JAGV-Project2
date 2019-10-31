@@ -15,9 +15,12 @@ namespace Project2JAGV.DataAccess.Entities
         public int Id { get; set; }
         [ForeignKey("User")]
         public int UserId { get; set; }
+        [ForeignKey("Deliverer")]
+        public int DelivererId { get; set; }
+        public bool Delivered { get; set; }
         public DateTime Date { get; set; }
         public virtual Users User { get; set; }
-        public virtual Drivers Driver { get; set; }
+        public virtual Users Deliverer { get; set; }
         public virtual ICollection<Pizzas> Pizzas { get; set; }
     }
 }

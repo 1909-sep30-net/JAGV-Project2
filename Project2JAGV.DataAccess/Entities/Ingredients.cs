@@ -10,7 +10,6 @@ namespace Project2JAGV.DataAccess.Entities
         {
             PizzaIngredients = new HashSet<PizzaIngredients>();
         }
-
         [Key]
         public int Id { get; set; }
         [ForeignKey("IngredientType")]
