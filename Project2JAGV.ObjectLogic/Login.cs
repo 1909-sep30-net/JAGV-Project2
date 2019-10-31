@@ -13,10 +13,10 @@ namespace Project2JAGV.ObjectLogic
             get
             {
 
-                if (!(_id >= 0))
+                if (_userName == null)
                     throw new ArgumentNullException("Id is not set");
 
-                return _id;
+                return _userName;
             }
             set
             {
@@ -31,10 +31,10 @@ namespace Project2JAGV.ObjectLogic
             get
             {
 
-                if (!(_userId >= 0))
+                if (_userPassword == null)
                     throw new ArgumentNullException("User Id is not set");
 
-                return _userId;
+                return _userPassword;
             }
             set
             {
@@ -46,14 +46,7 @@ namespace Project2JAGV.ObjectLogic
         }
         public int UserId
         {
-            get
-            {
-
-                if (_userName == null)
-                    throw new ArgumentNullException("User name is not set");
-
-                return _userName;
-            }
+            get => _userId;
             set
             {
                 if (value < 0)
@@ -64,14 +57,7 @@ namespace Project2JAGV.ObjectLogic
         }
         public int UserTypeId
         {
-            get
-            {
-
-                if (_userPassword == null)
-                    throw new ArgumentNullException("User password is not set");
-
-                return _userPassword;
-            }
+            get => _userTypeId;
             set
             {
                 if (value < 0)
