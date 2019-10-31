@@ -11,14 +11,7 @@ namespace Project2JAGV.ObjectLogic
         private string _zipCode { get; set; }
         public int Id
         {
-            get
-            {
-               
-                if (!(_id >= 0))
-                    throw new ArgumentNullException("Id is not set"); 
-
-                return _id;
-            }
+            get => _id;
             set
             {
                 if (value < 0)
@@ -47,7 +40,13 @@ namespace Project2JAGV.ObjectLogic
         }
         public string City
         {
-            get => _city;
+            get
+            {
+                if (_city == null)
+                    throw new ArgumentNullException("City is not set");
+
+                return _city;
+            }
             set
             {
                 if (value == "")
