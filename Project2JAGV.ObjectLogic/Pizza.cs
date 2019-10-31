@@ -9,7 +9,14 @@ namespace Project2JAGV.ObjectLogic
         private string _name;
         public int Id
         {
-            get => _id;
+            get
+            {
+
+                if (!(_id >= 0))
+                    throw new ArgumentNullException("Id is not set");
+
+                return _id;
+            }
             set
             {
                 if (value < 0)
@@ -22,7 +29,14 @@ namespace Project2JAGV.ObjectLogic
         }
         public string Name
         {
-            get => _name;
+            get
+            {
+
+                if (_name == null)
+                    throw new ArgumentNullException("Name is not set");
+
+                return _name;
+            }
             set
             {
                 if (value == "")
