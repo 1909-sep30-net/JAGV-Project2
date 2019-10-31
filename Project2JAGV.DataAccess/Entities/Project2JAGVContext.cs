@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Project2JAGV.DataAccess.Entities
 {
@@ -61,40 +60,37 @@ namespace Project2JAGV.DataAccess.Entities
 
             modelBuilder.Entity<Orders>(entity =>
             {
+                entity.Property(e => e.UserId).IsRequired();
                 entity.Property(e => e.Date).IsRequired();
             });
 
             modelBuilder.Entity<PizzaDelivery>(entity =>
             {
-              
+                entity.Property(e => e.OrderId).IsRequired();
+                entity.Property(e => e.DriverId).IsRequired();
+            });
+
+            modelBuilder.Entity<PizzaIngredients>(entity =>
+            {
+                entity.Property(e => e.PizzaId).IsRequired();
+                entity.Property(e => e.IngredientId).IsRequired();
+            });
+
+            modelBuilder.Entity<Pizzas>(entity =>
+            {
+                entity.Property(e => e.Name).IsRequired();
             });
 
             modelBuilder.Entity<Users>(entity =>
             {
-                entity.HasOne<Addresses>(e => e.Address)
-                    .WithMany(a => a.Users)
-                    .HasForeignKey(e => e.AddressId);
-                entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.AddressId).IsRequired();
+                entity.Property(e => e.FirstName).IsRequired();
+                entity.Property(e => e.LastName).IsRequired();
             });
 
-            modelBuilder.Entity<Addresses>(entity =>
-            {
-                entity.Property(e => e.Street)
-                .IsRequired()
-                .HasMaxLength(50);
-
-                entity.Property(e => e.State)
-                .IsRequired()
-                .HasMaxLength(50);
-
-                entity.Property(e => e.ZipCode)
-                .IsRequired()
-                .HasMaxLength(50);
-            });
+            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
-
 }
