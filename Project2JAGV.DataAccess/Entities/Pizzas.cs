@@ -7,12 +7,12 @@ namespace Project2JAGV.DataAccess.Entities
     {
         public Pizzas()
         {
-            Ingredients = new HashSet<PizzaIngredients>();
+            PizzaIngredients = new HashSet<PizzaIngredients>();
         }
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<PizzaIngredients> Ingredients { get; set; }
+        public virtual ICollection<PizzaIngredients> PizzaIngredients { get; set; }
     }
 }
