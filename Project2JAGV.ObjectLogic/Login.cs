@@ -8,6 +8,7 @@ namespace Project2JAGV.ObjectLogic
         private string _userPassword;
         private int _userId;
         private int _userTypeId;
+        public UserType UserType { get; set; }
         public string UserName
         {
             get

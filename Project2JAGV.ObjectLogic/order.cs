@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Project2JAGV.ObjectLogic
 {
-    public class Order
+    public class order
     {
         private int _id;
         private int _userId;
         private int _delivererId;
+        public bool Delivered { get; set; }
+        public DateTime Date { get; set; }
+        public ICollection<Pizza> Pizzas { get; set; } = new List<Pizza>();
         public int Id
         {
             get => _id;
@@ -46,8 +50,5 @@ namespace Project2JAGV.ObjectLogic
                 _delivererId = value;
             }
         }
-
-        public bool Delivered { get; set; }
-        public DateTime Date { get; set; }
     }
 }

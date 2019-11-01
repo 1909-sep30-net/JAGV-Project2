@@ -5,7 +5,7 @@ namespace Project2JAGV.ObjectLogic
     public class UserType
     {
         private int _id;
-        private string _type;
+        private string _name;
         public int Id
         {
             get => _id;
@@ -18,14 +18,14 @@ namespace Project2JAGV.ObjectLogic
                 _id = value;
             }
         }
-        public string Type
+        public string Name
         {
             get
             {
-                if (_type == null)
+                if (_name == null)
                     throw new ArgumentNullException("Type is not set");
 
-                return _type;
+                return _name;
             }
             set
             {
@@ -33,7 +33,7 @@ namespace Project2JAGV.ObjectLogic
                 {
                     throw new ArgumentException("Type must not be empty");
                 }
-                _type = value;
+                _name = value;
             }
         }
     }

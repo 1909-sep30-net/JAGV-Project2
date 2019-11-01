@@ -5,7 +5,7 @@ namespace Project2JAGV.ObjectLogic
     public class IngredientType
     {
         private int _id;
-        private string _type;
+        private string _name;
         public int Id
         {
             get => _id;
@@ -17,15 +17,15 @@ namespace Project2JAGV.ObjectLogic
                 _id = value;
             }
         }
-        public string Type
+        public string Name
         {
-            get => _type;
+            get => _name;
             set
             {
                 if (value == "")
-                    throw new ArgumentException("Type name must not be empty");
+                    throw new ArgumentException("Name must not be empty");
 
-                _type = value;
+                _name = value;
             }
         }
     }

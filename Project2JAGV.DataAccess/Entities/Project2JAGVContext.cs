@@ -35,7 +35,7 @@ namespace Project2JAGV.DataAccess.Entities
             });
             modelBuilder.Entity<IngredientTypes>(entity =>
             {
-                entity.Property(e => e.Type).IsRequired();
+                entity.Property(e => e.Name).IsRequired();
             });
             modelBuilder.Entity<Logins>(entity =>
             {
@@ -66,7 +66,7 @@ namespace Project2JAGV.DataAccess.Entities
             });
             modelBuilder.Entity<UserTypes>(entity =>
             {
-                entity.Property(e => e.Type).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(50);
             });
             OnModelCreatingPartial(modelBuilder);
         }

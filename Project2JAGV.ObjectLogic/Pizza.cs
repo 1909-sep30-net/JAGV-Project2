@@ -7,6 +7,7 @@ namespace Project2JAGV.ObjectLogic
     {
         private int _id;
         private string _name;
+        public ICollection<PizzaIngredient> PizzaIngredients { get; set; } = new List<PizzaIngredient>();
         public int Id
         {
             get => _id;
@@ -39,6 +40,5 @@ namespace Project2JAGV.ObjectLogic
                 _name = value;
             }
         }
-        public ICollection<PizzaIngredient> PizzaIngredients { get; set; } = new List<PizzaIngredient>();
     }
 }
