@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Project2JAGV.ObjectLogic
 {
-    public class order
+    public class Order
     {
         private int _id;
         private int _userId;
@@ -18,7 +19,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Id must not be negative");
+                    throw new ArgumentException("Id must not be negative", nameof(_id));
                 }
 
                 _id = value;
@@ -31,7 +32,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("User Id must not be negative");
+                    throw new ArgumentException("User Id must not be negative", nameof(_userId));
                 }
 
                 _userId = value;
@@ -44,7 +45,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("User Id must not be negative");
+                    throw new ArgumentException("User Id must not be negative", nameof(_delivererId));
                 }
 
                 _delivererId = value;

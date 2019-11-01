@@ -40,6 +40,7 @@ namespace Project2JAGV.DataAccess
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
