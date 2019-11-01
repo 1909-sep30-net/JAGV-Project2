@@ -93,9 +93,9 @@ namespace Project2JAGV.DataAccess
                 UserTypeId = login.UserTypeId,
             };
         }
-        public static order MapOrder(Entities.Orders order)
+        public static Order MapOrder(Entities.Orders order)
         {
-            return new order
+            return new Order
             {
                 Id = order.Id,
                 UserId = order.UserId,
@@ -105,7 +105,7 @@ namespace Project2JAGV.DataAccess
                 Pizzas = order.Pizzas.Select(MapPizza).ToList(),
             };
         }
-        public static Entities.Orders MapOrder(order order)
+        public static Entities.Orders MapOrder(Order order)
         {
             return new Entities.Orders
             {

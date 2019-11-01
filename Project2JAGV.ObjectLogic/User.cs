@@ -10,7 +10,7 @@ namespace Project2JAGV.ObjectLogic
         private string _lastName;
         public Login Login { get; set; }
         public Address Address { get; set; }
-        public ICollection<order> Orders { get; set; } = new List<order>();
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
         public int Id
         {
             get => _id;

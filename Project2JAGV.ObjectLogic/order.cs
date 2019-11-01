@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Project2JAGV.ObjectLogic
 {
-    public class order
+    public class Order
     {
         private int _id;
         private int _userId;
