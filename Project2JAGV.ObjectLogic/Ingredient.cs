@@ -10,14 +10,7 @@ namespace Project2JAGV.ObjectLogic
         private decimal _price;
         public int Id
         {
-            get
-            {
-
-                if (!(_id >= 0))
-                    throw new ArgumentNullException("Id is not set");
-
-                return _id;
-            }
+            get => _id;
             set
             {
                 if (value < 0)
@@ -28,14 +21,7 @@ namespace Project2JAGV.ObjectLogic
         }
         public int TypeId
         {
-            get
-            {
-
-                if (!(_typeId >= 0))
-                    throw new ArgumentNullException("Type Id is not set");
-
-                return _typeId;
-            }
+            get => _typeId;
             set
             {
                 if (value < 0)
@@ -64,14 +50,7 @@ namespace Project2JAGV.ObjectLogic
         }
         public decimal Price
         {
-            get
-            {
-
-                if (!(_price >= 0))
-                    throw new ArgumentNullException("Price is not set");
-
-                return _price;
-            }
+            get => _price;
             set
             {
                 if (value < 0)

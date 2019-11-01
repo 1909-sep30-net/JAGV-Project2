@@ -12,7 +12,6 @@ namespace Project2JAGV.ObjectLogic
         {
             get
             {
-
                 if (_userName == null)
                     throw new ArgumentNullException("Id is not set");
 
@@ -30,7 +29,6 @@ namespace Project2JAGV.ObjectLogic
         {
             get
             {
-
                 if (_userPassword == null)
                     throw new ArgumentNullException("User Id is not set");
 

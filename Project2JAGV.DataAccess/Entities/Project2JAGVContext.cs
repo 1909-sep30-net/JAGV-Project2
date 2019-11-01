@@ -8,11 +8,7 @@ namespace Project2JAGV.DataAccess.Entities
         {
 
         }
-
-        public Project2JAGVContext(DbContextOptions<Project2JAGVContext> options) : base(options)
-        {
-        }
-
+        public Project2JAGVContext(DbContextOptions<Project2JAGVContext> options) : base(options) { }
         public virtual DbSet<Addresses> Addresses { get; set; }
         public virtual DbSet<Ingredients> Ingredients { get; set; }
         public virtual DbSet<IngredientTypes> IngredientTypes { get; set; }
@@ -22,7 +18,6 @@ namespace Project2JAGV.DataAccess.Entities
         public virtual DbSet<Pizzas> Pizzas { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserTypes> UserTypes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Addresses>(entity =>
@@ -75,7 +70,6 @@ namespace Project2JAGV.DataAccess.Entities
             });
             OnModelCreatingPartial(modelBuilder);
         }
-
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

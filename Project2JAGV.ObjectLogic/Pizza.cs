@@ -9,14 +9,7 @@ namespace Project2JAGV.ObjectLogic
         private string _name;
         public int Id
         {
-            get
-            {
-
-                if (!(_id >= 0))
-                    throw new ArgumentNullException("Id is not set");
-
-                return _id;
-            }
+            get => _id;
             set
             {
                 if (value < 0)
@@ -31,7 +24,6 @@ namespace Project2JAGV.ObjectLogic
         {
             get
             {
-
                 if (_name == null)
                     throw new ArgumentNullException("Name is not set");
 
@@ -47,7 +39,6 @@ namespace Project2JAGV.ObjectLogic
                 _name = value;
             }
         }
-
         public ICollection<PizzaIngredient> PizzaIngredients { get; set; } = new List<PizzaIngredient>();
     }
 }

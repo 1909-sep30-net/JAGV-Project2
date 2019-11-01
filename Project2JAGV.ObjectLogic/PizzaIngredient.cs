@@ -9,14 +9,7 @@ namespace Project2JAGV.ObjectLogic
         private int _ingredientId;
         public int Id
         {
-            get
-            {
-
-                if (!(_id >= 0))
-                    throw new ArgumentNullException("Id is not set");
-
-                return _id;
-            }
+            get => _id;
             set
             {
                 if (value < 0)
@@ -29,14 +22,7 @@ namespace Project2JAGV.ObjectLogic
         }
         public int PizzaId
         {
-            get
-            {
-
-                if (!(_pizzaId >= 0))
-                    throw new ArgumentNullException("User name is not set");
-
-                return _pizzaId;
-            }
+            get => _pizzaId;
             set
             {
                 if (value < 0)
@@ -49,14 +35,7 @@ namespace Project2JAGV.ObjectLogic
         }
         public int IngredientId
         {
-            get
-            {
-
-                if (!(_ingredientId >= 0))
-                    throw new ArgumentNullException("User name is not set");
-
-                return _ingredientId;
-            }
+            get => _ingredientId;
             set
             {
                 if (value < 0)

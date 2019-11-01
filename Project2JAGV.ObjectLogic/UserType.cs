@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Project2JAGV.ObjectLogic
 {
@@ -22,7 +20,13 @@ namespace Project2JAGV.ObjectLogic
         }
         public string Type
         {
-            get => _type;
+            get
+            {
+                if (_type == null)
+                    throw new ArgumentNullException("Type is not set");
+
+                return _type;
+            }
             set
             {
                 if (value == "")
