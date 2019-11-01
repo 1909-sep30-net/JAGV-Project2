@@ -23,7 +23,7 @@ steps:
     projectKey: 'Project2JAGV'
     projectName: 'Project2JAGV'
     extraProperties: |
-     sonar.exclusions=**/lib/**
+     sonar.coverage.exclusions="**/Migrations/**,**/lib/**"
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
