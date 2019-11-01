@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Project2JAGV.ObjectLogic
 {
@@ -7,6 +8,9 @@ namespace Project2JAGV.ObjectLogic
         private int _id;
         private string _firstName;
         private string _lastName;
+        public Login Login { get; set; }
+        public Address Address { get; set; }
+        public ICollection<order> Orders { get; set; } = new List<order>();
         public int Id
         {
             get => _id;

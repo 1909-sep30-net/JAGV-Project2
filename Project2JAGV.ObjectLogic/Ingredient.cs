@@ -8,6 +8,7 @@ namespace Project2JAGV.ObjectLogic
         private int _typeId;
         private string _name;
         private decimal _price;
+        public IngredientType IngredientType { get; set; }
         public int Id
         {
             get => _id;

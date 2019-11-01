@@ -7,6 +7,7 @@ namespace Project2JAGV.ObjectLogic
         private int _id;
         private int _pizzaId;
         private int _ingredientId;
+        public Ingredient Ingredient { get; set; }
         public int Id
         {
             get => _id;

@@ -27,24 +27,29 @@ namespace Project2JAGV.DataAccess
                 ZipCode = address.ZipCode,
             };
         }
-        public static Ingredient MapIngredient(Entities.Ingredients ingresient)
+        public static Ingredient MapIngredient(Entities.Ingredients ingredient)
         {
             return new Ingredient
             {
-                Id = ingresient.Id,
-                TypeId = ingresient.TypeId,
-                Name = ingresient.Name,
-                Price = ingresient.Price,
+                Id = ingredient.Id,
+                TypeId = ingredient.TypeId,
+                Name = ingredient.Name,
+                Price = ingredient.Price,
+                IngredientType = new IngredientType
+                {
+                    Id = ingredient.IngredientType.Id,
+                    Name = ingredient.IngredientType.Name,
+                }
             };
         }
-        public static Entities.Ingredients MapIngredient(Ingredient ingresient)
+        public static Entities.Ingredients MapIngredient(Ingredient ingredient)
         {
             return new Entities.Ingredients
             {
-                Id = ingresient.Id,
-                TypeId = ingresient.TypeId,
-                Name = ingresient.Name,
-                Price = ingresient.Price,
+                Id = ingredient.Id,
+                TypeId = ingredient.TypeId,
+                Name = ingredient.Name,
+                Price = ingredient.Price,
             };
         }
         public static IngredientType MapIngredientType(Entities.IngredientTypes ingredientType)
@@ -52,7 +57,7 @@ namespace Project2JAGV.DataAccess
             return new IngredientType
             {
                 Id = ingredientType.Id,
-                Type = ingredientType.Type,
+                Name = ingredientType.Name,
             };
         }
         public static Entities.IngredientTypes MapIngredientType(IngredientType ingredientType)
@@ -60,7 +65,7 @@ namespace Project2JAGV.DataAccess
             return new Entities.IngredientTypes
             {
                 Id = ingredientType.Id,
-                Type = ingredientType.Type,
+                Name = ingredientType.Name,
             };
         }
         public static Login MapLogin(Entities.Logins login)
@@ -71,6 +76,11 @@ namespace Project2JAGV.DataAccess
                 UserPassword = login.UserPassword,
                 UserId = login.UserId,
                 UserTypeId = login.UserTypeId,
+                UserType = new UserType
+                {
+                    Id = login.UserType.Id,
+                    Name = login.UserType.Name,
+                }
             };
         }
         public static Entities.Logins MapLogin(Login login)
@@ -83,18 +93,19 @@ namespace Project2JAGV.DataAccess
                 UserTypeId = login.UserTypeId,
             };
         }
-        public static Order MapOrder(Entities.Orders order)
+        public static order MapOrder(Entities.Orders order)
         {
-            return new Order
+            return new order
             {
                 Id = order.Id,
                 UserId = order.UserId,
                 DelivererId = order.DelivererId,
                 Delivered = order.Delivered,
                 Date = order.Date,
+                Pizzas = order.Pizzas.Select(MapPizza).ToList(),
             };
         }
-        public static Entities.Orders MapOrder(Order order)
+        public static Entities.Orders MapOrder(order order)
         {
             return new Entities.Orders
             {
@@ -103,6 +114,7 @@ namespace Project2JAGV.DataAccess
                 DelivererId = order.DelivererId,
                 Delivered = order.Delivered,
                 Date = order.Date,
+                Pizzas = order.Pizzas.Select(MapPizza).ToList(),
             };
         }
         public static Pizza MapPizza(Entities.Pizzas pizza)
@@ -123,22 +135,24 @@ namespace Project2JAGV.DataAccess
                 PizzaIngredients = pizza.PizzaIngredients.Select(MapPizzaIngredient).ToList(),
             };
         }
-        public static PizzaIngredient MapPizzaIngredient(Entities.PizzaIngredients pizzaIngredients)
+        public static PizzaIngredient MapPizzaIngredient(Entities.PizzaIngredients pizzaIngredient)
         {
             return new PizzaIngredient
             {
-                Id = pizzaIngredients.Id,
-                PizzaId = pizzaIngredients.PizzaId,
-                IngredientId = pizzaIngredients.IngredientId,
+                Id = pizzaIngredient.Id,
+                PizzaId = pizzaIngredient.PizzaId,
+                IngredientId = pizzaIngredient.IngredientId,
+                Ingredient = MapIngredient(pizzaIngredient.Ingredient),
             };
         }
-        public static Entities.PizzaIngredients MapPizzaIngredient(PizzaIngredient pizzaIngredients)
+        public static Entities.PizzaIngredients MapPizzaIngredient(PizzaIngredient pizzaIngredient)
         {
             return new Entities.PizzaIngredients
             {
-                Id = pizzaIngredients.Id,
-                PizzaId = pizzaIngredients.PizzaId,
-                IngredientId = pizzaIngredients.IngredientId,
+                Id = pizzaIngredient.Id,
+                PizzaId = pizzaIngredient.PizzaId,
+                IngredientId = pizzaIngredient.IngredientId,
+                Ingredient = MapIngredient(pizzaIngredient.Ingredient),
             };
         }
         public static User MapUser(Entities.Users user)
@@ -148,6 +162,9 @@ namespace Project2JAGV.DataAccess
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Login = MapLogin(user.Login),
+                Address = MapAddress(user.Address),
+                Orders = user.Orders.Select(MapOrder).ToList(),
             };
         }
         public static Entities.Users MapUser(User user)
@@ -157,6 +174,9 @@ namespace Project2JAGV.DataAccess
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Login = MapLogin(user.Login),
+                Address = MapAddress(user.Address),
+                Orders = user.Orders.Select(MapOrder).ToList(),
             };
         }
         public static UserType MapUserType(Entities.UserTypes userType)
@@ -164,7 +184,7 @@ namespace Project2JAGV.DataAccess
             return new UserType
             {
                 Id = userType.Id,
-                Type = userType.Type,
+                Name = userType.Name,
             };
         }
         public static Entities.UserTypes MapUserType(UserType userType)
@@ -172,7 +192,7 @@ namespace Project2JAGV.DataAccess
             return new Entities.UserTypes
             {
                 Id = userType.Id,
-                Type = userType.Type,
+                Name = userType.Name,
             };
         }
     }
