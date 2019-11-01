@@ -31,11 +31,7 @@ namespace Project2JAGV.Test.ObjectLogicTests
         /// </summary>
         readonly Ingredient test_ingredient = new Ingredient();
 
-        [Fact]
-        public void Ingredient_typeId_Get_Test()
-        {
-            Assert.ThrowsAny<ArgumentException>(() => test_ingredient.TypeId);
-        }
+        
         [Fact]
         public void Ingredient_Name_Get_Test()
         {

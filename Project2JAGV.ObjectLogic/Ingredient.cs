@@ -51,7 +51,14 @@ namespace Project2JAGV.ObjectLogic
         }
         public decimal Price
         {
-            get => _price;
+            get
+            {
+
+                if (_price == 0)
+                    throw new ArgumentNullException("Price is not set");
+
+                return _price;
+            }
             set
             {
                 if (value < 0)
