@@ -15,7 +15,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Id must not be negative");
+                    throw new ArgumentException("Id must not be negative", nameof(_id));
                 }
 
                 _id = value;
@@ -28,7 +28,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Pizza Id must not be negative");
+                    throw new ArgumentException("Pizza Id must not be negative", nameof(_pizzaId));
                 }
 
                 _pizzaId = value;
@@ -41,7 +41,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Ingredient Id must not be negative");
+                    throw new ArgumentException("Ingredient Id must not be negative", nameof(_ingredientId));
                 }
 
                 _ingredientId = value;
