@@ -33,6 +33,5 @@ namespace Project2JAGV.Test.ObjectLogicTests
         {
             Assert.Throws<ArgumentNullException>(() => test_pizza.Name );
         }
-
     }
 }

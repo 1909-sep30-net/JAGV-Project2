@@ -5,6 +5,7 @@ namespace Project2JAGV.DataAccess
 {
     public class Mappers
     {
+        protected Mappers() { }
         public static Address MapAddress(Entities.Addresses address)
         {
             return new Address

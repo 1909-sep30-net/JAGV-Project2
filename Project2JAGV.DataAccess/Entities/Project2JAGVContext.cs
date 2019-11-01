@@ -68,8 +68,6 @@ namespace Project2JAGV.DataAccess.Entities
             {
                 entity.Property(e => e.Name).HasMaxLength(50);
             });
-            OnModelCreatingPartial(modelBuilder);
         }
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
