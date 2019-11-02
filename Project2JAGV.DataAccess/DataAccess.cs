@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Project2JAGV.DataAccess.Entities;
+using Project2JAGV.ObjectLogic;
 using Project2JAGV.ObjectLogic.Interfaces;
 
 namespace Project2JAGV.DataAccess
@@ -19,6 +22,210 @@ namespace Project2JAGV.DataAccess
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task AddAddressAsync(Address address)
+        {
+            Entities.Addresses addresses = Mappers.MapAddress(address);
+
+            await _context.AddAsync(addresses);
+        }
+
+        public async Task<ICollection<Address>> GetAddressesAsync(int? id = null)
+        {
+            List<Addresses> addresses = await _context.Addresses.ToListAsync();
+
+            if (id != null)
+                addresses = addresses.Where(a => a.Id == id).ToList();
+
+            return addresses.Select(Mappers.MapAddress).ToList();
+        }
+
+        public async Task AddIngredientAsync(Ingredient ingredient)
+        {
+            Ingredients ingredients = Mappers.MapIngredient(ingredient);
+
+            await _context.AddAsync(ingredients);
+        }
+
+        public async Task<ICollection<Ingredient>> GetIngredientsAsync(int? id = null, int? typeId = null)
+        {
+            List<Ingredients> ingredients = await _context.Ingredients.Include(i => i.IngredientType).ToListAsync();
+
+            if (id != null)
+                ingredients = ingredients.Where(i => i.Id == id).ToList();
+            if (typeId != null)
+                ingredients = ingredients.Where(i => i.TypeId == typeId).ToList();
+
+            return ingredients.Select(Mappers.MapIngredient).ToList();
+        }
+
+        public async Task AddIngredientTypeAsync(IngredientType ingredientType)
+        {
+            IngredientTypes ingredientTypes = Mappers.MapIngredientType(ingredientType);
+
+            await _context.AddAsync(ingredientTypes);
+        }
+
+        public async Task<ICollection<IngredientType>> GetIngredientsTypeAsync(int? id = null, string name = null)
+        {
+            List<IngredientTypes> ingredientTypes = await _context.IngredientTypes.ToListAsync();
+
+            if (id != null)
+                ingredientTypes = ingredientTypes.Where(it => it.Id == id).ToList();
+            if (name != null)
+                ingredientTypes = ingredientTypes.Where(it => it.Name == name).ToList();
+
+            return ingredientTypes.Select(Mappers.MapIngredientType).ToList();
+        }
+
+        public async Task AddLoginAsync(Login login)
+        {
+            Logins logins = Mappers.MapLogin(login);
+
+            await _context.AddAsync(logins);
+        }
+
+        public async Task<ICollection<Login>> GetLoginsAsync(string userName = null, string userPassword = null, int? userId = null, int? userTypeId = null)
+        {
+            List<Logins> logins = await _context.Logins.Include(l => l.UserType).ToListAsync();
+
+            if (userName != null)
+                logins = logins.Where(l => l.UserName == userName).ToList();
+            if (userPassword != null)
+                logins = logins.Where(l => l.UserPassword == userPassword).ToList();
+            if (userId != null)
+                logins = logins.Where(l => l.UserId == userId).ToList();
+            if (userTypeId != null)
+                logins = logins.Where(l => l.UserTypeId == userTypeId).ToList();
+
+            return logins.Select(Mappers.MapLogin).ToList();
+        }
+
+        public async Task AddOrderAsync(Order order)
+        {
+            Orders orders = Mappers.MapOrder(order);
+
+            await _context.AddAsync(orders);
+        }
+
+        public async Task<ICollection<Order>> GetOrdersAsync(int? id = null, int? userId = null, int? delivererId = null)
+        {
+            List<Orders> orders = await _context.Orders
+                .Include(o => o.Pizzas)
+                    .ThenInclude(p => p.PizzaIngredients)
+                        .ThenInclude(pi => pi.Ingredient)
+                            .ThenInclude(i => i.IngredientType)
+                .ToListAsync();
+
+            if (id != null)
+                orders = orders.Where(o => o.Id == id).ToList();
+            if (userId != null)
+                orders = orders.Where(o => o.UserId == userId).ToList();
+            if (delivererId != null)
+                orders = orders.Where(o => o.DelivererId == delivererId).ToList();
+
+            return orders.Select(Mappers.MapOrder).ToList();
+        }
+
+        public async Task AddPizzaAsync(Pizza pizza)
+        {
+            Pizzas pizzas = Mappers.MapPizza(pizza);
+
+            await _context.AddAsync(pizzas);
+        }
+
+        public async Task<ICollection<Pizza>> GetPizzasAsync(int? id = null, string name = null)
+        {
+            List<Pizzas> pizzas = await _context.Pizzas
+                .Include(p => p.PizzaIngredients)
+                    .ThenInclude(pi => pi.Ingredient)
+                        .ThenInclude(i => i.IngredientType)
+                .ToListAsync();
+
+            if (id != null)
+                pizzas = pizzas.Where(p => p.Id == id).ToList();
+            if (name != null)
+                pizzas = pizzas.Where(p => p.Name == name).ToList();
+
+            return pizzas.Select(Mappers.MapPizza).ToList();
+        }
+
+        public async Task AddPizzaIngredientAsync(PizzaIngredient pizzaIngredient)
+        {
+            PizzaIngredients pizzaIngredients = Mappers.MapPizzaIngredient(pizzaIngredient);
+
+            await _context.AddAsync(pizzaIngredients);
+        }
+
+        public async Task<ICollection<PizzaIngredient>> GetPizzaIngredientsAsync(int? id = null, int? pizzaId = null, int? IngredientId = null)
+        {
+            List<PizzaIngredients> pizzaIngredients = await _context.PizzaIngredients
+                .Include(pi => pi.Ingredient)
+                    .ThenInclude(i => i.IngredientType)
+                .ToListAsync();
+
+            if (id != null)
+                pizzaIngredients = pizzaIngredients.Where(pi => pi.Id == id).ToList();
+            if (pizzaId != null)
+                pizzaIngredients = pizzaIngredients.Where(pi => pi.PizzaId == pizzaId).ToList();
+            if (IngredientId != null)
+                pizzaIngredients = pizzaIngredients.Where(pi => pi.IngredientId == IngredientId).ToList();
+
+            return pizzaIngredients.Select(Mappers.MapPizzaIngredient).ToList();
+        }
+
+        public async Task AddUserAsync(User user)
+        {
+            Users users = Mappers.MapUser(user);
+
+            await _context.AddAsync(users);
+        }
+
+        public async Task<ICollection<User>> GetUsersAsync(int? id = null, string firstName = null, string lastName = null)
+        {
+            List<Users> users = await _context.Users
+                .Include(u => u.Address)
+                .Include(u => u.Login)
+                    .ThenInclude(l => l.UserType)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.Pizzas)
+                        .ThenInclude(p => p.PizzaIngredients)
+                            .ThenInclude(pi => pi.Ingredient)
+                                .ThenInclude(i => i.IngredientType)
+                 .ToListAsync();
+
+            if (id != null)
+                users = users.Where(u => u.Id == id).ToList();
+            if (firstName != null)
+                users = users.Where(u => u.FirstName == firstName).ToList();
+            if (lastName != null)
+                users = users.Where(u => u.LastName == lastName).ToList();
+
+            return users.Select(Mappers.MapUser).ToList();
+        }
+
+        public async Task AddUserTypeAsync(UserType userType)
+        {
+            UserTypes userTypes = Mappers.MapUserType(userType);
+
+            await _context.AddAsync(userTypes);
+        }
+
+        public async Task<ICollection<UserType>> GetUserTypesAsync(int? id = null, string name = null)
+        {
+            List<UserTypes> userTypes = await _context.UserTypes.ToListAsync();
+
+            if (id != null)
+                userTypes = userTypes.Where(ut => ut.Id == id).ToList();
+            if (name != null)
+                userTypes = userTypes.Where(ut => ut.Name == name).ToList();
+
+            return userTypes.Select(Mappers.MapUserType).ToList();
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
 
         #region IDisposable Support
         private bool _disposedValue = false; // To detect redundant calls
