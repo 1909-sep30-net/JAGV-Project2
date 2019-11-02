@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Project2JAGV.DataAccess.Entities;
@@ -9,9 +10,10 @@ using Project2JAGV.DataAccess.Entities;
 namespace Project2JAGV.DataAccess.Migrations
 {
     [DbContext(typeof(Project2JAGVContext))]
-    partial class Project2JAGVContextModelSnapshot : ModelSnapshot
+    [Migration("20191102010603_jagv1.0")]
+    partial class jagv10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

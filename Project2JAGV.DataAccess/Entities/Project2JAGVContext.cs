@@ -48,6 +48,7 @@ namespace Project2JAGV.DataAccess.Entities
             {
                 entity.Property(e => e.UserId).IsRequired();
                 entity.Property(e => e.Date).IsRequired();
+                entity.HasOne(e => e.User).WithMany(u => u.Orders).HasForeignKey(e => e.UserId);
             });
             modelBuilder.Entity<PizzaIngredients>(entity =>
             {
