@@ -19,7 +19,14 @@ namespace Project2JAGV.ObjectLogic
         }
         public string Name
         {
-            get => _name;
+            get
+            {
+
+                if (_name == null)
+                    throw new ArgumentNullException("Name is not set");
+
+                return _name;
+            }
             set
             {
                 if (value == "")
