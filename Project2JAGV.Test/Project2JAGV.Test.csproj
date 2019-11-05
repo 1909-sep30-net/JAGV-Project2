@@ -40,8 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccessTest\" />
     <Folder Include="ApiTest\" />
+    <Folder Include="DataAccessTest\" />
   </ItemGroup>
 
 </Project>
