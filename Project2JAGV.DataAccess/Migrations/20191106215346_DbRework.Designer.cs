@@ -10,8 +10,8 @@ using Project2JAGV.DataAccess.Entities;
 namespace Project2JAGV.DataAccess.Migrations
 {
     [DbContext(typeof(Project2JAGVContext))]
-    [Migration("20191102010603_jagv1.0")]
-    partial class jagv10
+    [Migration("20191106215346_DbRework")]
+    partial class DbRework
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,11 +30,13 @@ namespace Project2JAGV.DataAccess.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Street")
                         .IsRequired()
@@ -43,7 +45,8 @@ namespace Project2JAGV.DataAccess.Migrations
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -59,7 +62,8 @@ namespace Project2JAGV.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -89,33 +93,6 @@ namespace Project2JAGV.DataAccess.Migrations
                     b.HasIndex("TypeId");
 
                     b.ToTable("Ingredients");
-                });
-
-            modelBuilder.Entity("Project2JAGV.DataAccess.Entities.Logins", b =>
-                {
-                    b.Property<string>("UserName")
-                        .HasColumnType("character varying(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UserPassword")
-                        .IsRequired()
-                        .HasColumnType("character varying(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<int>("UserTypeId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserName");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.HasIndex("UserTypeId");
-
-                    b.ToTable("Logins");
                 });
 
             modelBuilder.Entity("Project2JAGV.DataAccess.Entities.Orders", b =>
@@ -176,16 +153,15 @@ namespace Project2JAGV.DataAccess.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("OrdersId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrdersId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Pizzas");
                 });
@@ -198,6 +174,7 @@ namespace Project2JAGV.DataAccess.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
 
@@ -216,17 +193,23 @@ namespace Project2JAGV.DataAccess.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("UserTypesId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("UserTypesId");
 
                     b.ToTable("Users");
                 });
@@ -236,21 +219,6 @@ namespace Project2JAGV.DataAccess.Migrations
                     b.HasOne("Project2JAGV.DataAccess.Entities.IngredientTypes", "IngredientType")
                         .WithMany("Ingredients")
                         .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Project2JAGV.DataAccess.Entities.Logins", b =>
-                {
-                    b.HasOne("Project2JAGV.DataAccess.Entities.Users", "User")
-                        .WithOne("Login")
-                        .HasForeignKey("Project2JAGV.DataAccess.Entities.Logins", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Project2JAGV.DataAccess.Entities.UserTypes", "UserType")
-                        .WithMany("Logins")
-                        .HasForeignKey("UserTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -287,9 +255,11 @@ namespace Project2JAGV.DataAccess.Migrations
 
             modelBuilder.Entity("Project2JAGV.DataAccess.Entities.Pizzas", b =>
                 {
-                    b.HasOne("Project2JAGV.DataAccess.Entities.Orders", null)
+                    b.HasOne("Project2JAGV.DataAccess.Entities.Orders", "Order")
                         .WithMany("Pizzas")
-                        .HasForeignKey("OrdersId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Project2JAGV.DataAccess.Entities.Users", b =>
@@ -297,6 +267,12 @@ namespace Project2JAGV.DataAccess.Migrations
                     b.HasOne("Project2JAGV.DataAccess.Entities.Addresses", "Address")
                         .WithMany("Users")
                         .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project2JAGV.DataAccess.Entities.UserTypes", "UserType")
+                        .WithMany("Users")
+                        .HasForeignKey("UserTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
