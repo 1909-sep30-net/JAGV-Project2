@@ -57,12 +57,49 @@ namespace Project2JAGV.Api.Controllers
             }).ToList();
         }
 
-        // POST: api/Users
-        [HttpPost]
-        public ActionResult Post([FromBody, Bind("Id, FirstName, LastName")] UserModel user)
+        // GET: api/Users/5/addressId
+        [HttpGet("{id}/{addressId}", Name = "Get")]
+        public async Task<AddressModel> GetAddress(int _id)
         {
-            return CreatedAtRoute("Get", new {});
+            User dbUsers = (await db.GetUsersAsync(id: _id)).First();
+            return new AddressModel
+            {
+                Id = dbUsers.Address.Id,
+                Street = dbUsers.Address.Street,
+                City = dbUsers.Address.City,
+                State = dbUsers.Address.State,
+                ZipCode = dbUsers.Address.ZipCode
+
+            };
         }
+
+        // GET: api/Users/5/orders
+        [HttpGet("{id}/orders", Name = "Get")]
+        public async Task<IEnumerable<OrderModel>> GetOrders(int _id)
+        {
+            User dbUsers = (await db.GetUsersAsync(id: _id)).First();
+            return dbUsers.Orders.Select(o => new OrderModel
+            {
+
+                Id = o.Id,
+                UserId = o.UserId,
+                DelivererId = o.DelivererId,
+                Delivered = o.Delivered,
+                Date = o.Date
+            });
+
+            
+        }
+
+
+
+
+        // POST: api/Users
+        // [HttpPost]
+        //public ActionResult Post([FromBody, Bind("Id, FirstName, LastName")] UserModel user)
+        //{
+        //    return CreatedAtRoute("Get", new {});
+        //}
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
