@@ -15,12 +15,12 @@ namespace Project2JAGV.Test
         [Fact]
         public void User_First_Name_Empty()
         {
-            Assert.Throws<ArgumentException>(() => new User { FirstName = "" });
+            Assert.Throws<ArgumentException>(() => new User { Name = "" });
         }
         [Fact]
         public void User_Last_Name_Empty()
         {
-            Assert.Throws<ArgumentException>(() => new User { LastName = "" });
+            Assert.Throws<ArgumentException>(() => new User { Password = "" });
         }
     }
 }

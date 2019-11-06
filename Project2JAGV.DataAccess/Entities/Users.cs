@@ -12,12 +12,14 @@ namespace Project2JAGV.DataAccess.Entities
         }
         [Key]
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
         [ForeignKey("Address")]
         public int AddressId { get; set; }
-        public virtual Logins Login { get; set; }
+        [ForeignKey("UserType")]
+        public int UserTypesId { get; set; }
         public virtual Addresses Address { get; set; }
+        public virtual UserTypes UserType { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
     }
 }

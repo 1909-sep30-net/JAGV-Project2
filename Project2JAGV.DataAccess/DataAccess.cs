@@ -77,29 +77,6 @@ namespace Project2JAGV.DataAccess
             return ingredientTypes.Select(Mappers.MapIngredientType).ToList();
         }
 
-        public async Task AddLoginAsync(Login login)
-        {
-            Logins logins = Mappers.MapLogin(login);
-
-            await _context.AddAsync(logins);
-        }
-
-        public async Task<ICollection<Login>> GetLoginsAsync(string userName = null, string userPassword = null, int? userId = null, int? userTypeId = null)
-        {
-            List<Logins> logins = await _context.Logins.Include(l => l.UserType).ToListAsync();
-
-            if (userName != null)
-                logins = logins.Where(l => l.UserName == userName).ToList();
-            if (userPassword != null)
-                logins = logins.Where(l => l.UserPassword == userPassword).ToList();
-            if (userId != null)
-                logins = logins.Where(l => l.UserId == userId).ToList();
-            if (userTypeId != null)
-                logins = logins.Where(l => l.UserTypeId == userTypeId).ToList();
-
-            return logins.Select(Mappers.MapLogin).ToList();
-        }
-
         public async Task AddOrderAsync(Order order)
         {
             Orders orders = Mappers.MapOrder(order);
@@ -180,12 +157,11 @@ namespace Project2JAGV.DataAccess
             await _context.AddAsync(users);
         }
 
-        public async Task<ICollection<User>> GetUsersAsync(int? id = null, string firstName = null, string lastName = null)
+        public async Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null)
         {
             List<Users> users = await _context.Users
                 .Include(u => u.Address)
-                .Include(u => u.Login)
-                    .ThenInclude(l => l.UserType)
+                .Include(l => l.UserType)
                 .Include(u => u.Orders)
                     .ThenInclude(o => o.Pizzas)
                         .ThenInclude(p => p.PizzaIngredients)
@@ -195,10 +171,8 @@ namespace Project2JAGV.DataAccess
 
             if (id != null)
                 users = users.Where(u => u.Id == id).ToList();
-            if (firstName != null)
-                users = users.Where(u => u.FirstName == firstName).ToList();
-            if (lastName != null)
-                users = users.Where(u => u.LastName == lastName).ToList();
+            if (name != null)
+                users = users.Where(u => u.Name == name).ToList();
 
             return users.Select(Mappers.MapUser).ToList();
         }

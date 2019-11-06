@@ -6,9 +6,9 @@ namespace Project2JAGV.ObjectLogic
     public class User
     {
         private int _id;
-        private string _firstName;
-        private string _lastName;
-        public Login Login { get; set; }
+        private string _name;
+        private string _password;
+        public UserType UserType { get; set; }
         public Address Address { get; set; }
         public ICollection<Order> Orders { get; set; } = new List<Order>();
         public int Id
@@ -24,14 +24,14 @@ namespace Project2JAGV.ObjectLogic
                 _id = value;
             }
         }
-        public string FirstName
+        public string Name
         {
             get
             {
-                if (_firstName == null)
-                    throw new ArgumentException("First name is not set", nameof(_firstName));
+                if (_name == null)
+                    throw new ArgumentException("First name is not set", nameof(_name));
 
-                return _firstName;
+                return _name;
             }
             set
             {
@@ -40,17 +40,17 @@ namespace Project2JAGV.ObjectLogic
                     throw new ArgumentException("First name must not be empty", nameof(value));
                 }
 
-                _firstName = value;
+                _name = value;
             }
         }
-        public string LastName
+        public string Password
         {
             get
             {
-                if (_lastName == null)
-                    throw new ArgumentException("Last name is not set", nameof(_lastName));
+                if (_password == null)
+                    throw new ArgumentException("Last name is not set", nameof(_password));
 
-                return _lastName;
+                return _password;
             }
             set
             {
@@ -59,7 +59,7 @@ namespace Project2JAGV.ObjectLogic
                     throw new ArgumentException("Last name must not be empty", nameof(value));
                 }
 
-                _lastName = value;
+                _password = value;
             }
         }
     }

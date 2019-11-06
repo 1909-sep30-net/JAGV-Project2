@@ -69,31 +69,7 @@ namespace Project2JAGV.DataAccess
                 Name = ingredientType.Name,
             };
         }
-        public static Login MapLogin(Entities.Logins login)
-        {
-            return new Login
-            {
-                UserName = login.UserName,
-                UserPassword = login.UserPassword,
-                UserId = login.UserId,
-                UserTypeId = login.UserTypeId,
-                UserType = new UserType
-                {
-                    Id = login.UserType.Id,
-                    Name = login.UserType.Name,
-                }
-            };
-        }
-        public static Entities.Logins MapLogin(Login login)
-        {
-            return new Entities.Logins
-            {
-                UserName = login.UserName,
-                UserPassword = login.UserPassword,
-                UserId = login.UserId,
-                UserTypeId = login.UserTypeId,
-            };
-        }
+        //Mapping order ---///
         public static Order MapOrder(Entities.Orders order)
         {
             return new Order
@@ -123,6 +99,7 @@ namespace Project2JAGV.DataAccess
             return new Pizza
             {
                 Id = pizza.Id,
+                OrderId = pizza.OrderId,
                 Name = pizza.Name,
                 PizzaIngredients = pizza.PizzaIngredients.Select(MapPizzaIngredient).ToList(),
             };
@@ -133,6 +110,7 @@ namespace Project2JAGV.DataAccess
             {
                 Id = pizza.Id,
                 Name = pizza.Name,
+                OrderId = pizza.OrderId,
                 PizzaIngredients = pizza.PizzaIngredients.Select(MapPizzaIngredient).ToList(),
             };
         }
@@ -161,9 +139,9 @@ namespace Project2JAGV.DataAccess
             return new User
             {
                 Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Login = MapLogin(user.Login),
+                Name = user.Name,
+                Password = user.Password,
+                UserType = MapUserType(user.UserType),
                 Address = MapAddress(user.Address),
                 Orders = user.Orders.Select(MapOrder).ToList(),
             };
@@ -173,9 +151,9 @@ namespace Project2JAGV.DataAccess
             return new Entities.Users
             {
                 Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Login = MapLogin(user.Login),
+                Name = user.Name,
+                Password = user.Password,
+                UserType = MapUserType(user.UserType),
                 Address = MapAddress(user.Address),
                 Orders = user.Orders.Select(MapOrder).ToList(),
             };

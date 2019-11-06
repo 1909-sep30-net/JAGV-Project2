@@ -35,8 +35,8 @@ namespace Project2JAGV.Api.Controllers
             return dbUsers.Select(u => new UserModel
             {
                 Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName
+                Name = u.Name,
+                Password = u.Password
             }).ToList();
 
         }
@@ -50,8 +50,8 @@ namespace Project2JAGV.Api.Controllers
             return dbUsers.Select(u => new UserModel
             {
                 Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName
+                Name = u.Name,
+                Password = u.Password,
             }).ToList();
         }
 
