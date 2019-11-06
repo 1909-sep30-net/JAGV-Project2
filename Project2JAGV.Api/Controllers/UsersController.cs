@@ -16,21 +16,18 @@ namespace Project2JAGV.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IDataAccess db;
-
-        public UsersController(IDataAccess dataAccess)
-        {
-            db = dataAccess;
-        }
         
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(ILogger<UsersController> logger)
+        public UsersController(IDataAccess dataAccess, ILogger<UsersController> logger)
         {
+            db = dataAccess;
             _logger = logger;
             _logger.LogInformation("Starting");
         }
 
         // GET: api/Users
+        [Route("all")]
         [HttpGet]
         public async Task<IEnumerable<UserModel>> Get()
         {
@@ -45,7 +42,8 @@ namespace Project2JAGV.Api.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}", Name = "Get")]
+        [Route("{id}")]
+        [HttpGet(Name = "Get")]
         public async Task<IEnumerable<UserModel>> Get(int _id)
         {
             IEnumerable<User> dbUsers = await db.GetUsersAsync(id: _id);
@@ -58,7 +56,8 @@ namespace Project2JAGV.Api.Controllers
         }
 
         // GET: api/Users/5/addressId
-        [HttpGet("{id}/{addressId}", Name = "Get")]
+        [Route("{id}/address")]
+        [HttpGet(Name = "GetAddress")]
         public async Task<AddressModel> GetAddress(int _id)
         {
             User dbUsers = (await db.GetUsersAsync(id: _id)).First();
@@ -74,7 +73,8 @@ namespace Project2JAGV.Api.Controllers
         }
 
         // GET: api/Users/5/orders
-        [HttpGet("{id}/orders", Name = "Get")]
+        [Route("{id}/orders")]
+        [HttpGet(Name = "GetOrders")]
         public async Task<IEnumerable<OrderModel>> GetOrders(int _id)
         {
             User dbUsers = (await db.GetUsersAsync(id: _id)).First();
