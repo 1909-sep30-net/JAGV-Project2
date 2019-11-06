@@ -16,6 +16,6 @@ namespace Project2JAGV.Api.Models
 
         public int UserTypeId { get; set; }
 
-        public UserType UserType { get; set; }
+        public UserTypeModel UserType { get; set; }
     }
 }

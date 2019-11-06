@@ -12,6 +12,6 @@ namespace Project2JAGV.Api.Models
         public int TypeId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public IngredientType IngredientType { get; set; }
+        public IngredientTypeModel IngredientType { get; set; }
     }
 }
