@@ -16,21 +16,18 @@ namespace Project2JAGV.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IDataAccess db;
-
-        public UsersController(IDataAccess dataAccess)
-        {
-            db = dataAccess;
-        }
         
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(ILogger<UsersController> logger)
+        public UsersController(IDataAccess dataAccess, ILogger<UsersController> logger)
         {
+            db = dataAccess;
             _logger = logger;
             _logger.LogInformation("Starting");
         }
 
         // GET: api/Users
+        [Route("all")]
         [HttpGet]
         public async Task<IEnumerable<UserModel>> Get()
         {
@@ -45,7 +42,8 @@ namespace Project2JAGV.Api.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}", Name = "Get")]
+        [Route("{id}")]
+        [HttpGet(Name = "Get")]
         public async Task<IEnumerable<UserModel>> Get(int _id)
         {
             IEnumerable<User> dbUsers = await db.GetUsersAsync(id: _id);
@@ -57,12 +55,51 @@ namespace Project2JAGV.Api.Controllers
             }).ToList();
         }
 
-        // POST: api/Users
-        [HttpPost]
-        public ActionResult Post([FromBody, Bind("Id, FirstName, LastName")] UserModel user)
+        // GET: api/Users/5/addressId
+        [Route("{id}/address")]
+        [HttpGet(Name = "GetAddress")]
+        public async Task<AddressModel> GetAddress(int _id)
         {
-            return CreatedAtRoute("Get", new {});
+            User dbUsers = (await db.GetUsersAsync(id: _id)).First();
+            return new AddressModel
+            {
+                Id = dbUsers.Address.Id,
+                Street = dbUsers.Address.Street,
+                City = dbUsers.Address.City,
+                State = dbUsers.Address.State,
+                ZipCode = dbUsers.Address.ZipCode
+
+            };
         }
+
+        // GET: api/Users/5/orders
+        [Route("{id}/orders")]
+        [HttpGet(Name = "GetOrders")]
+        public async Task<IEnumerable<OrderModel>> GetOrders(int _id)
+        {
+            User dbUsers = (await db.GetUsersAsync(id: _id)).First();
+            return dbUsers.Orders.Select(o => new OrderModel
+            {
+
+                Id = o.Id,
+                UserId = o.UserId,
+                DelivererId = o.DelivererId,
+                Delivered = o.Delivered,
+                Date = o.Date
+            });
+
+            
+        }
+
+
+
+
+        // POST: api/Users
+        // [HttpPost]
+        //public ActionResult Post([FromBody, Bind("Id, FirstName, LastName")] UserModel user)
+        //{
+        //    return CreatedAtRoute("Get", new {});
+        //}
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
