@@ -1,44 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Project2JAGV.ObjectLogic;
+using System;
 using Xunit;
-using Project2JAGV.ObjectLogic;
 
 namespace Project2JAGV.Test.ObjectLogicTests
 {
-    public class PizzaTest
+    public class IngredientTypeTest
     {
         [Theory]
         [InlineData(-1, false)]
         [InlineData(1, true)]
         public void Id_property_Test(int input, bool type)
         {
+
             if (!type)
             {
-                Assert.Throws<ArgumentException>(() => new Pizza { Id = input });
+                Assert.Throws<ArgumentException>(() => new IngredientType { Id = input });
             }
             else
             {
-                Pizza test = new Pizza();
+                IngredientType test = new IngredientType();
                 test.Id = input;
                 Assert.Equal(input, test.Id);
             }
         }
         [Theory]
         [InlineData("", false)]
-        [InlineData("Name", true)]
+        [InlineData("name", true)]
         public void Name_property_Test(string input, bool type)
         {
+
             if (!type)
             {
-                Assert.Throws<ArgumentException>(() => new Pizza { Name = input });
+                Assert.Throws<ArgumentException>(() => new IngredientType { Name = input });
             }
             else
             {
-                Pizza test = new Pizza();
+                IngredientType test = new IngredientType();
                 test.Name = input;
                 Assert.Equal(input, test.Name);
             }
         }
     }
+
+
 }

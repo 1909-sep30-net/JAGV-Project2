@@ -15,7 +15,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Id must not be negative", nameof(_id));
+                    throw new ArgumentException("Id must not be negative", nameof(value));
                 }
 
                 _id = value;
@@ -26,7 +26,7 @@ namespace Project2JAGV.ObjectLogic
             get
             {
                 if (_name == null)
-                    throw new ArgumentNullException("Name is not set", nameof(_name));
+                    throw new ArgumentException("Name is not set", nameof(_name));
 
                 return _name;
             }
@@ -34,7 +34,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value == "")
                 {
-                    throw new ArgumentException("Name must not be empty", nameof(_name));
+                    throw new ArgumentException("Name must not be empty", nameof(value));
                 }
 
                 _name = value;

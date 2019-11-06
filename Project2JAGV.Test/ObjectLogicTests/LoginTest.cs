@@ -8,45 +8,69 @@ namespace Project2JAGV.Test.ObjectLogicTests
 {
     public class LoginTest
     {
-        /// <summary>
-        /// Testing for Empty Setters
-        /// </summary>
-        [Fact]
-        public void Login_UserId_Empty()
+        [Theory]
+        [InlineData("", false)]
+        [InlineData("UserName", true)]
+        public void UsserName_property_Test(string input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Login { UserId = -1 });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Login { UserName = input });
+            }
+            else
+            {
+                Login test = new Login();
+                test.UserName = input;
+                Assert.Equal(input, test.UserName);
+            }
         }
-        [Fact]
-        public void Login_UserName_Empty()
+        [Theory]
+        [InlineData("", false)]
+        [InlineData("UserPassword", true)]
+        public void UsserPassword_property_Test(string input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Login { UserName = "" });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Login { UserPassword = input });
+            }
+            else
+            {
+                Login test = new Login();
+                test.UserPassword = input;
+                Assert.Equal(input, test.UserPassword);
+            }
         }
-        [Fact]
-        public void Login_UserPassword_Empty()
+        [Theory]
+        [InlineData(-1, false)]
+        [InlineData(1, true)]
+        public void UsserId_property_Test(int input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Login { UserPassword = "" });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Login { UserId = input });
+            }
+            else
+            {
+                Login test = new Login();
+                test.UserId = input;
+                Assert.Equal(input, test.UserId);
+            }
         }
-        [Fact]
-        public void Login_User_TypeId_Empty()
+        [Theory]
+        [InlineData(-1, false)]
+        [InlineData(1, true)]
+        public void UserTypeId_property_Test(int input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Login { UserTypeId = -1 });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Login { UserTypeId = input });
+            }
+            else
+            {
+                Login test = new Login();
+                test.UserTypeId = input;
+                Assert.Equal(input, test.UserTypeId);
+            }
         }
-        /// <summary>
-        /// Login getters tests
-        /// </summary>
-        /// 
-        readonly Login test_login = new Login();
-
-        [Fact]
-        public void Login_UserName_Get_Test()
-        {
-            Assert.ThrowsAny<ArgumentNullException>(() => test_login.UserName);
-        }
-        [Fact]
-        public void Login_UserPassword_Get_Test()
-        {
-            Assert.ThrowsAny<ArgumentNullException>(() => test_login.UserPassword);
-        }
-        
     }
 }
