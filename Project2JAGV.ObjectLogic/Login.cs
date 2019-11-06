@@ -14,14 +14,14 @@ namespace Project2JAGV.ObjectLogic
             get
             {
                 if (_userName == null)
-                    throw new ArgumentNullException("Id is not set", nameof(_userName));
+                    throw new ArgumentException("Id is not set", nameof(_userName));
 
                 return _userName;
             }
             set
             {
                 if (value == "")
-                    throw new ArgumentException("User name must not be empty", nameof(_userName));
+                    throw new ArgumentException("User name must not be empty", nameof(value));
 
                 _userName = value;
             }
@@ -31,14 +31,14 @@ namespace Project2JAGV.ObjectLogic
             get
             {
                 if (_userPassword == null)
-                    throw new ArgumentNullException("User Id is not set", nameof(_userPassword));
+                    throw new ArgumentException("User Id is not set", nameof(_userPassword));
 
                 return _userPassword;
             }
             set
             {
                 if (value == "")
-                    throw new ArgumentException("User password must not be empty", nameof(_userPassword));
+                    throw new ArgumentException("User password must not be empty", nameof(value));
 
                 _userPassword = value;
             }
@@ -49,7 +49,7 @@ namespace Project2JAGV.ObjectLogic
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("User Id must not be negative", nameof(_userId));
+                    throw new ArgumentException("User Id must not be negative", nameof(value));
 
                 _userId = value;
             }
@@ -60,7 +60,7 @@ namespace Project2JAGV.ObjectLogic
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("User Type Id must not be negative", nameof(_userTypeId));
+                    throw new ArgumentException("User Type Id must not be negative", nameof(value));
 
                 _userTypeId = value;
             }

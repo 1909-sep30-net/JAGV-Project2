@@ -19,7 +19,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Id must not be negative", nameof(_id));
+                    throw new ArgumentException("Id must not be negative", nameof(value));
                 }
 
                 _id = value;
@@ -32,7 +32,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("User Id must not be negative", nameof(_userId));
+                    throw new ArgumentException("User Id must not be negative", nameof(value));
                 }
 
                 _userId = value;
@@ -45,7 +45,7 @@ namespace Project2JAGV.ObjectLogic
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("User Id must not be negative", nameof(_delivererId));
+                    throw new ArgumentException("User Id must not be negative", nameof(value));
                 }
 
                 _delivererId = value;

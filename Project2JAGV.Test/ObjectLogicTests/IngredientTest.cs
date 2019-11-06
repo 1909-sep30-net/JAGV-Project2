@@ -6,50 +6,69 @@ namespace Project2JAGV.Test.ObjectLogicTests
 {
     public class IngredientTest
     {
-        [Fact]
-        public void Ingredient_Negative_Id()
+        [Theory]
+        [InlineData(-1, false)]
+        [InlineData(1, true)]
+        public void City_property_Test(int input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Ingredient { Id = -1 });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Ingredient { Id = input });
+            }
+            else
+            {
+                Ingredient test = new Ingredient();
+                test.Id = input;
+                Assert.Equal(input, test.Id);
+            }
         }
-        [Fact]
-        public void Ingredient_Negative_Type_Id()
+        [Theory]
+        [InlineData(-1, false)]
+        [InlineData(1, true)]
+        public void TypeId_property_Test(int input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Ingredient { TypeId = -1 });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Ingredient { TypeId = input });
+            }
+            else
+            {
+                Ingredient test = new Ingredient();
+                test.TypeId = input;
+                Assert.Equal(input, test.TypeId);
+            }
         }
-        [Fact]
-        public void Ingredient_Name_Empty()
+        [Theory]
+        [InlineData("", false)]
+        [InlineData("Name", true)]
+        public void Name_property_Test(string input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Ingredient { Name = "" });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Ingredient { Name = input });
+            }
+            else
+            {
+                Ingredient test = new Ingredient();
+                test.Name = input;
+                Assert.Equal(input, test.Name);
+            }
         }
-        [Fact]
-        public void Ingredient_Negative_Price()
+        [Theory]
+        [InlineData(-1, false)]
+        [InlineData(1, true)]
+        public void Price_property_Test(int input, bool type)
         {
-            Assert.Throws<ArgumentException>(() => new Ingredient { Price = -1.20m });
+            if (!type)
+            {
+                Assert.Throws<ArgumentException>(() => new Ingredient { Price = input });
+            }
+            else
+            {
+                Ingredient test = new Ingredient();
+                test.Price = input;
+                Assert.Equal(input, test.Price);
+            }
         }
-        /// <summary>
-        /// Ingredient getters tests
-        /// </summary>
-        readonly Ingredient test_ingredient = new Ingredient();
-
-        
-        [Fact]
-        public void Ingredient_Name_Get_Test()
-        {
-            Assert.ThrowsAny<ArgumentNullException>(() => test_ingredient.Name);
-        }
-        [Fact]
-        public void Ingredient_Price_Get_Test()
-        {
-            Assert.ThrowsAny<ArgumentException>(() => test_ingredient.Price);
-        }
-
-        IngredientType test_type = new IngredientType();
-
-        [Fact]
-        public void Ingredient_Type_Name_Get_Test()
-        {
-            Assert.ThrowsAny<ArgumentNullException>(() => test_type.Name);
-        }
-
     }
 }
