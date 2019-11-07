@@ -17,7 +17,7 @@ namespace Project2JAGV.DataAccess.Entities
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         [ForeignKey("UserType")]
-        public int UserTypesId { get; set; }
+        public int UserTypeId { get; set; }
         public virtual Addresses Address { get; set; }
         public virtual UserTypes UserType { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }

@@ -9,7 +9,7 @@ using Project2JAGV.ObjectLogic.Interfaces;
 
 namespace Project2JAGV.Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -33,7 +33,20 @@ namespace Project2JAGV.Api.Controllers
             {
                 Id = u.Id,
                 Name = u.Name,
-                Password = u.Password
+                Password = u.Password,
+                UserType = new UserTypeModel
+                {
+                    Id = u.UserType.Id,
+                    Name = u.UserType.Name,
+                },
+                Address = new AddressModel
+                {
+                    Id = u.Address.Id,
+                    Street = u.Address.Street,
+                    City = u.Address.City,
+                    State = u.Address.State,
+                    ZipCode = u.Address.ZipCode,
+                },
             }).ToList();
         }
 
