@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Project2JAGV.Api.Models;
@@ -11,12 +9,11 @@ using Project2JAGV.ObjectLogic.Interfaces;
 
 namespace Project2JAGV.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IDataAccess db;
-        
         private readonly ILogger<UsersController> _logger;
 
         public UsersController(IDataAccess dataAccess, ILogger<UsersController> logger)
@@ -38,7 +35,6 @@ namespace Project2JAGV.Api.Controllers
                 Name = u.Name,
                 Password = u.Password
             }).ToList();
-
         }
 
         // GET: api/Users/5
@@ -67,8 +63,7 @@ namespace Project2JAGV.Api.Controllers
                 Street = dbUsers.Address.Street,
                 City = dbUsers.Address.City,
                 State = dbUsers.Address.State,
-                ZipCode = dbUsers.Address.ZipCode
-
+                ZipCode = dbUsers.Address.ZipCode,
             };
         }
 
@@ -80,37 +75,59 @@ namespace Project2JAGV.Api.Controllers
             User dbUsers = (await db.GetUsersAsync(id: _id)).First();
             return dbUsers.Orders.Select(o => new OrderModel
             {
-
                 Id = o.Id,
                 UserId = o.UserId,
                 DelivererId = o.DelivererId,
                 Delivered = o.Delivered,
                 Date = o.Date
             });
-
-            
         }
 
-
-
-
-        // POST: api/Users
-        // [HttpPost]
-        //public ActionResult Post([FromBody, Bind("Id, FirstName, LastName")] UserModel user)
-        //{
-        //    return CreatedAtRoute("Get", new {});
-        //}
-
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        //POST: api/Users
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody, Bind("Id, Name, Password, UserType{Name} Address{Street, City, State, ZipCode}")] UserModel user)
         {
-        }
+            Address address = new Address
+            {
+                Id = 0,
+                Street = user.Address.Street,
+                City = user.Address.City,
+                State = user.Address.State,
+                ZipCode = user.Address.ZipCode,
+            };
+            UserType userType = (await db.GetUserTypesAsync(name: user.UserType.Name)).First();
+            Address addressExists = (await db.GetAddressesAsync(address: address)).FirstOrDefault();
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (addressExists == null)
+            {
+                await db.AddAddressAsync(address);
+                await db.SaveAsync();
+
+                addressExists = (await db.GetAddressesAsync(address: address)).First();
+            }
+
+            User userExist = (await db.GetUsersAsync(name: user.Name)).FirstOrDefault();
+
+            if (userExist != null)
+            {
+                return BadRequest("User name already in use");
+            }
+
+            User newUser = new User
+            {
+                Id = 0,
+                Name = user.Name,
+                Password = user.Password,
+                UserType = userType,
+                Address = addressExists,
+            };
+
+            await db.AddUserAsync(newUser);
+            await db.SaveAsync();
+
+            newUser = (await db.GetUsersAsync(name: user.Name)).First();
+
+            return CreatedAtRoute("Get", new {newUser.Id}, newUser);
         }
     }
 }

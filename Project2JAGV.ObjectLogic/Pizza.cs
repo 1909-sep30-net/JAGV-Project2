@@ -25,7 +25,7 @@ namespace Project2JAGV.ObjectLogic
 
         public int OrderId
         {
-            get => _id;
+            get => _orderId;
             set
             {
                 if (value < 0)
@@ -33,7 +33,7 @@ namespace Project2JAGV.ObjectLogic
                     throw new ArgumentException("Id must not be negative", nameof(value));
                 }
 
-                _id = value;
+                _orderId = value;
             }
         }
 

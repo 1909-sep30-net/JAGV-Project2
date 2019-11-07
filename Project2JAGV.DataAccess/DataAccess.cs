@@ -29,13 +29,16 @@ namespace Project2JAGV.DataAccess
             await _context.AddAsync(addresses);
         }
 
-        public async Task<ICollection<Address>> GetAddressesAsync(int? id = null)
+        public async Task<ICollection<Address>> GetAddressesAsync(int? id = null, Address address = null)
         {
             List<Addresses> addresses = await _context.Addresses.ToListAsync();
 
             if (id != null)
                 addresses = addresses.Where(a => a.Id == id).ToList();
-
+            if (address != null)
+            {
+                addresses = addresses.Where(a => a.Street == address.Street && a.City == address.City && a.State == address.State && a.ZipCode == address.ZipCode).ToList();
+            }
             return addresses.Select(Mappers.MapAddress).ToList();
         }
 
