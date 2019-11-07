@@ -9,6 +9,10 @@ namespace Project2JAGV.Api.Models
     {
         public int Id { get; set; }
 
+        public int OrderId { get; set; }
+
         public string Name { get; set; }
+
+        public ICollection<PizzaIngredientModel> pi { get; set; }
     }
 }
