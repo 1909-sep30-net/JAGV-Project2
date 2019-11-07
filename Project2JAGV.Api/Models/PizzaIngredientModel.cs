@@ -12,5 +12,7 @@ namespace Project2JAGV.Api.Models
         public int PizzaId { get; set; }
 
         public int IngredientId { get; set; }
+
+        public IngredientModel Ingredient { get; set; }
     }
 }
