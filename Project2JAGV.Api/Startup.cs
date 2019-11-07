@@ -8,7 +8,6 @@ using Microsoft.OpenApi.Models;
 using Project2JAGV.DataAccess.Entities;
 using Project2JAGV.ObjectLogic.Interfaces;
 
-
 namespace Project2JAGV.Api
 {
     public class Startup
