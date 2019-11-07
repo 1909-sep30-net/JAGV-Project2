@@ -57,7 +57,7 @@ namespace Project2JAGV.DataAccess.Entities
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.AddressId).IsRequired();
-                entity.Property(e => e.UserTypesId).IsRequired();
+                entity.Property(e => e.UserTypeId).IsRequired();
             });
             modelBuilder.Entity<UserTypes>(entity =>
             {
