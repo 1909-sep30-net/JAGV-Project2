@@ -31,7 +31,7 @@ namespace Project2JAGV.DataAccess
 
         public async Task<ICollection<Address>> GetAddressesAsync(int? id = null, Address address = null)
         {
-            List<Addresses> addresses = await _context.Addresses.ToListAsync();
+            List<Addresses> addresses = await _context.Addresses.AsNoTracking().ToListAsync();
 
             if (id != null)
                 addresses = addresses.Where(a => a.Id == id).ToList();
@@ -51,7 +51,7 @@ namespace Project2JAGV.DataAccess
 
         public async Task<ICollection<Ingredient>> GetIngredientsAsync(int? id = null, int? typeId = null)
         {
-            List<Ingredients> ingredients = await _context.Ingredients.Include(i => i.IngredientType).ToListAsync();
+            List<Ingredients> ingredients = await _context.Ingredients.Include(i => i.IngredientType).AsNoTracking().ToListAsync();
 
             if (id != null)
                 ingredients = ingredients.Where(i => i.Id == id).ToList();
@@ -70,7 +70,7 @@ namespace Project2JAGV.DataAccess
 
         public async Task<ICollection<IngredientType>> GetIngredientsTypeAsync(int? id = null, string name = null)
         {
-            List<IngredientTypes> ingredientTypes = await _context.IngredientTypes.ToListAsync();
+            List<IngredientTypes> ingredientTypes = await _context.IngredientTypes.AsNoTracking().ToListAsync();
 
             if (id != null)
                 ingredientTypes = ingredientTypes.Where(it => it.Id == id).ToList();
@@ -94,7 +94,7 @@ namespace Project2JAGV.DataAccess
                     .ThenInclude(p => p.PizzaIngredients)
                         .ThenInclude(pi => pi.Ingredient)
                             .ThenInclude(i => i.IngredientType)
-                .ToListAsync();
+                .AsNoTracking().ToListAsync();
 
             if (id != null)
                 orders = orders.Where(o => o.Id == id).ToList();
@@ -119,7 +119,7 @@ namespace Project2JAGV.DataAccess
                 .Include(p => p.PizzaIngredients)
                     .ThenInclude(pi => pi.Ingredient)
                         .ThenInclude(i => i.IngredientType)
-                .ToListAsync();
+                .AsNoTracking().ToListAsync();
 
             if (id != null)
                 pizzas = pizzas.Where(p => p.Id == id).ToList();
@@ -141,7 +141,7 @@ namespace Project2JAGV.DataAccess
             List<PizzaIngredients> pizzaIngredients = await _context.PizzaIngredients
                 .Include(pi => pi.Ingredient)
                     .ThenInclude(i => i.IngredientType)
-                .ToListAsync();
+                .AsNoTracking().ToListAsync();
 
             if (id != null)
                 pizzaIngredients = pizzaIngredients.Where(pi => pi.Id == id).ToList();
@@ -170,7 +170,7 @@ namespace Project2JAGV.DataAccess
                         .ThenInclude(p => p.PizzaIngredients)
                             .ThenInclude(pi => pi.Ingredient)
                                 .ThenInclude(i => i.IngredientType)
-                 .ToListAsync();
+                 .AsNoTracking().ToListAsync();
 
             if (id != null)
                 users = users.Where(u => u.Id == id).ToList();
@@ -189,7 +189,7 @@ namespace Project2JAGV.DataAccess
 
         public async Task<ICollection<UserType>> GetUserTypesAsync(int? id = null, string name = null)
         {
-            List<UserTypes> userTypes = await _context.UserTypes.ToListAsync();
+            List<UserTypes> userTypes = await _context.UserTypes.AsNoTracking().ToListAsync();
 
             if (id != null)
                 userTypes = userTypes.Where(ut => ut.Id == id).ToList();

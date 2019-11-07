@@ -7,8 +7,8 @@ namespace Project2JAGV.Api.Models
 {
     public class UserTypeModel
     {
-        public int Id;
+        public int Id { get; set; }
 
-        public string Name;
+        public string Name { get; set; }
     }
 }

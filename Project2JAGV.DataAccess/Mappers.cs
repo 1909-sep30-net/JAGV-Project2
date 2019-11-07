@@ -153,8 +153,10 @@ namespace Project2JAGV.DataAccess
                 Id = user.Id,
                 Name = user.Name,
                 Password = user.Password,
-                UserType = MapUserType(user.UserType),
-                Address = MapAddress(user.Address),
+                UserTypeId = user.UserType.Id,
+                AddressId = user.Address.Id,
+                //UserType = MapUserType(user.UserType),
+                //Address = MapAddress(user.Address),
                 Orders = user.Orders.Select(MapOrder).ToList(),
             };
         }

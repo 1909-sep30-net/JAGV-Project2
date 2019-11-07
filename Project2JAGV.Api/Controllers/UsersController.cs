@@ -98,7 +98,7 @@ namespace Project2JAGV.Api.Controllers
 
         //POST: api/Users
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody, Bind("Id, Name, Password, UserType{Name} Address{Street, City, State, ZipCode}")] UserModel user)
+        public async Task<ActionResult> Post([FromBody] UserModel user)
         {
             Address address = new Address
             {
@@ -111,12 +111,16 @@ namespace Project2JAGV.Api.Controllers
             UserType userType = (await db.GetUserTypesAsync(name: user.UserType.Name)).First();
             Address addressExists = (await db.GetAddressesAsync(address: address)).FirstOrDefault();
 
-            if (addressExists == null)
+            if (addressExists != null)
             {
-                await db.AddAddressAsync(address);
-                await db.SaveAsync();
+                address = addressExists;
+            }
+            else
+            {
+                db.AddAddressAsync(address);
+                db.SaveAsync();
 
-                addressExists = (await db.GetAddressesAsync(address: address)).First();
+                address = (await db.GetAddressesAsync(address: address)).First();
             }
 
             User userExist = (await db.GetUsersAsync(name: user.Name)).FirstOrDefault();
@@ -132,7 +136,7 @@ namespace Project2JAGV.Api.Controllers
                 Name = user.Name,
                 Password = user.Password,
                 UserType = userType,
-                Address = addressExists,
+                Address = address,
             };
 
             await db.AddUserAsync(newUser);
