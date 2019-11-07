@@ -7,7 +7,7 @@ namespace Project2JAGV.ObjectLogic.Interfaces
     public interface IDataAccess : IDisposable
     {
         public Task AddAddressAsync(Address address);
-        public Task<ICollection<Address>> GetAddressesAsync(int? id = null);
+        public Task<ICollection<Address>> GetAddressesAsync(int? id = null, Address address = null);
         public Task AddIngredientAsync(Ingredient ingredient);
         public Task<ICollection<Ingredient>> GetIngredientsAsync(int? id = null, int? typeId = null);
         public Task AddIngredientTypeAsync(IngredientType ingredientType);
