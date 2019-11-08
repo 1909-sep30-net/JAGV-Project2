@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project2JAGV.DataAccess.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,5 +24,7 @@ namespace Project2JAGV.ObjectLogic.Interfaces
         public Task AddUserTypeAsync(UserType userType);
         public Task<ICollection<UserType>> GetUserTypesAsync(int? id = null, string name = null);
         public Task SaveAsync();
+
+      
     }
 }
