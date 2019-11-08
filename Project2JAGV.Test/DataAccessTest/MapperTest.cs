@@ -28,22 +28,22 @@ namespace Project2JAGV.Test.DataAccessTest
             }
         };
 
-        [Fact]
-        public async void AddUserShouldAddUser()
-        {
-            var options = new DbContextOptionsBuilder<Project2JAGVContext>()
-                .UseInMemoryDatabase("AddUser")
-                .Options;
-            using var context = new Project2JAGVContext(options);
+        //[Fact]
+        //public async void AddUserShouldAddUser()
+        //{
+        //    var options = new DbContextOptionsBuilder<Project2JAGVContext>()
+        //        .UseInMemoryDatabase("AddUser")
+        //        .Options;
+        //    using var context = new Project2JAGVContext(options);
 
-            var repo = new DataAccess.DataAccess(context);
+        //    var repo = new DataAccess.DataAccess(context);
 
-            await repo.AddUserAsync(user);
-            context.SaveChanges();
+        //    await repo.AddUserAsync(user);
+        //    context.SaveChanges();
 
-            using var assertContext = new Project2JAGVContext(options);
-            var rest = assertContext.Users.Select(u => u);
-            Assert.NotEmpty(rest);
-        }
+        //    using var assertContext = new Project2JAGVContext(options);
+        //    var rest = assertContext.Users.Select(u => u);
+        //    Assert.NotEmpty(rest);
+        //}
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Project2JAGV.DataAccess.Entities;
+using Project2JAGV.DataAccess.Interfaces;
 using Project2JAGV.ObjectLogic;
 using Project2JAGV.ObjectLogic.Interfaces;
 
@@ -11,20 +12,22 @@ namespace Project2JAGV.DataAccess
 {
     public class DataAccess : IDataAccess
     {
+        private readonly IMappers _mapper;
         private readonly Project2JAGVContext _context;
 
         /// <summary>
         /// constructor for the project0 database access
         /// </summary>
         /// <param name="context">Dbcontext for accessing the database</param>
-        public DataAccess(Project2JAGVContext context)
+        public DataAccess(Project2JAGVContext context, IMappers mapper)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task AddAddressAsync(Address address)
         {
-            Entities.Addresses addresses = Mappers.MapAddress(address);
+            Entities.Addresses addresses = _mapper.MapAddress(address);
 
             await _context.AddAsync(addresses);
         }
@@ -39,12 +42,12 @@ namespace Project2JAGV.DataAccess
             {
                 addresses = addresses.Where(a => a.Street == address.Street && a.City == address.City && a.State == address.State && a.ZipCode == address.ZipCode).ToList();
             }
-            return addresses.Select(Mappers.MapAddress).ToList();
+            return addresses.Select(_mapper.MapAddress).ToList();
         }
 
         public async Task AddIngredientAsync(Ingredient ingredient)
         {
-            Ingredients ingredients = Mappers.MapIngredient(ingredient);
+            Ingredients ingredients = _mapper.MapIngredient(ingredient);
 
             await _context.AddAsync(ingredients);
         }
@@ -58,12 +61,12 @@ namespace Project2JAGV.DataAccess
             if (typeId != null)
                 ingredients = ingredients.Where(i => i.TypeId == typeId).ToList();
 
-            return ingredients.Select(Mappers.MapIngredient).ToList();
+            return ingredients.Select(_mapper.MapIngredient).ToList();
         }
 
         public async Task AddIngredientTypeAsync(IngredientType ingredientType)
         {
-            IngredientTypes ingredientTypes = Mappers.MapIngredientType(ingredientType);
+            IngredientTypes ingredientTypes = _mapper.MapIngredientType(ingredientType);
 
             await _context.AddAsync(ingredientTypes);
         }
@@ -77,12 +80,12 @@ namespace Project2JAGV.DataAccess
             if (name != null)
                 ingredientTypes = ingredientTypes.Where(it => it.Name == name).ToList();
 
-            return ingredientTypes.Select(Mappers.MapIngredientType).ToList();
+            return ingredientTypes.Select(_mapper.MapIngredientType).ToList();
         }
 
         public async Task AddOrderAsync(Order order)
         {
-            Orders orders = Mappers.MapOrder(order);
+            Orders orders = _mapper.MapOrder(order);
 
             await _context.AddAsync(orders);
         }
@@ -103,12 +106,12 @@ namespace Project2JAGV.DataAccess
             if (delivererId != null)
                 orders = orders.Where(o => o.DelivererId == delivererId).ToList();
 
-            return orders.Select(Mappers.MapOrder).ToList();
+            return orders.Select(_mapper.MapOrder).ToList();
         }
 
         public async Task AddPizzaAsync(Pizza pizza)
         {
-            Pizzas pizzas = Mappers.MapPizza(pizza);
+            Pizzas pizzas = _mapper.MapPizza(pizza);
 
             await _context.AddAsync(pizzas);
         }
@@ -126,12 +129,12 @@ namespace Project2JAGV.DataAccess
             if (name != null)
                 pizzas = pizzas.Where(p => p.Name == name).ToList();
 
-            return pizzas.Select(Mappers.MapPizza).ToList();
+            return pizzas.Select(_mapper.MapPizza).ToList();
         }
 
         public async Task AddPizzaIngredientAsync(PizzaIngredient pizzaIngredient)
         {
-            PizzaIngredients pizzaIngredients = Mappers.MapPizzaIngredient(pizzaIngredient);
+            PizzaIngredients pizzaIngredients = _mapper.MapPizzaIngredient(pizzaIngredient);
 
             await _context.AddAsync(pizzaIngredients);
         }
@@ -150,12 +153,12 @@ namespace Project2JAGV.DataAccess
             if (IngredientId != null)
                 pizzaIngredients = pizzaIngredients.Where(pi => pi.IngredientId == IngredientId).ToList();
 
-            return pizzaIngredients.Select(Mappers.MapPizzaIngredient).ToList();
+            return pizzaIngredients.Select(_mapper.MapPizzaIngredient).ToList();
         }
 
         public async Task AddUserAsync(User user)
         {
-            Users users = Mappers.MapUser(user);
+            Users users = _mapper.MapUser(user);
 
             await _context.AddAsync(users);
         }
@@ -177,12 +180,12 @@ namespace Project2JAGV.DataAccess
             if (name != null)
                 users = users.Where(u => u.Name == name).ToList();
 
-            return users.Select(Mappers.MapUser).ToList();
+            return users.Select(_mapper.MapUser).ToList();
         }
 
         public async Task AddUserTypeAsync(UserType userType)
         {
-            UserTypes userTypes = Mappers.MapUserType(userType);
+            UserTypes userTypes = _mapper.MapUserType(userType);
 
             await _context.AddAsync(userTypes);
         }
@@ -196,7 +199,7 @@ namespace Project2JAGV.DataAccess
             if (name != null)
                 userTypes = userTypes.Where(ut => ut.Name == name).ToList();
 
-            return userTypes.Select(Mappers.MapUserType).ToList();
+            return userTypes.Select(_mapper.MapUserType).ToList();
         }
 
         public async Task SaveAsync()
