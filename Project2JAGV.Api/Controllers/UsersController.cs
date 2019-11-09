@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -53,23 +54,36 @@ namespace Project2JAGV.Api.Controllers
         // GET: api/Users/5
         [Route("{id}")]
         [HttpGet(Name = "Get")]
-        public async Task<IEnumerable<UserModel>> Get(int _id)
+        public async Task<IEnumerable<UserModel>> Get(int id)
         {
-            IEnumerable<User> dbUsers = await db.GetUsersAsync(id: _id);
+            IEnumerable<User> dbUsers = await db.GetUsersAsync(id: id);
             return dbUsers.Select(u => new UserModel
             {
                 Id = u.Id,
                 Name = u.Name,
                 Password = u.Password,
+                UserType = new UserTypeModel
+                {
+                    Id = u.UserType.Id,
+                    Name = u.UserType.Name,
+                },
+                Address = new AddressModel
+                {
+                    Id = u.Address.Id,
+                    Street = u.Address.Street,
+                    City = u.Address.City,
+                    State = u.Address.State,
+                    ZipCode = u.Address.ZipCode,
+                },
             }).ToList();
         }
 
         // GET: api/Users/5/addressId
         [Route("{id}/address")]
         [HttpGet(Name = "GetAddress")]
-        public async Task<AddressModel> GetAddress(int _id)
+        public async Task<AddressModel> GetAddress(int id)
         {
-            User dbUsers = (await db.GetUsersAsync(id: _id)).First();
+            User dbUsers = (await db.GetUsersAsync(id: id)).First();
             return new AddressModel
             {
                 Id = dbUsers.Address.Id,
@@ -83,9 +97,9 @@ namespace Project2JAGV.Api.Controllers
         // GET: api/Users/5/orders
         [Route("{id}/orders")]
         [HttpGet(Name = "GetOrders")]
-        public async Task<IEnumerable<OrderModel>> GetOrders(int _id)
+        public async Task<IEnumerable<OrderModel>> GetOrders(int id)
         {
-            User dbUsers = (await db.GetUsersAsync(id: _id)).First();
+            User dbUsers = (await db.GetUsersAsync(id: id)).First();
             return dbUsers.Orders.Select(o => new OrderModel
             {
                 Id = o.Id,
@@ -100,51 +114,58 @@ namespace Project2JAGV.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserModel user)
         {
-            Address address = new Address
-            {
-                Id = 0,
-                Street = user.Address.Street,
-                City = user.Address.City,
-                State = user.Address.State,
-                ZipCode = user.Address.ZipCode,
-            };
-            UserType userType = (await db.GetUserTypesAsync(name: user.UserType.Name)).First();
-            Address addressExists = (await db.GetAddressesAsync(address: address)).FirstOrDefault();
-
-            if (addressExists != null)
-            {
-                address = addressExists;
-            }
-            else
-            {
-                db.AddAddressAsync(address);
-                db.SaveAsync();
-
-                address = (await db.GetAddressesAsync(address: address)).First();
-            }
-
-            User userExist = (await db.GetUsersAsync(name: user.Name)).FirstOrDefault();
-
-            if (userExist != null)
-            {
-                return BadRequest("User name already in use");
-            }
-
             User newUser = new User
             {
-                Id = 0,
+                Id = user.Id,
                 Name = user.Name,
                 Password = user.Password,
-                UserType = userType,
-                Address = address,
+                UserType = new UserType
+                {
+                    Id = user.UserType.Id,
+                    Name = user.UserType.Name,
+                },
+                Address = new Address
+                {
+                    Id = user.Address.Id,
+                    Street = user.Address.Street,
+                    City = user.Address.City,
+                    State = user.Address.State,
+                    ZipCode = user.Address.ZipCode,
+                }
             };
 
-            await db.AddUserAsync(newUser);
-            await db.SaveAsync();
+            try
+            {
+                await db.AddUserAsync(newUser);
+                await db.SaveAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
 
-            newUser = (await db.GetUsersAsync(name: user.Name)).First();
+            newUser = (await db.GetUsersAsync(name: newUser.Name)).First();
+            UserModel userModel = new UserModel
+            {
+                Id = newUser.Id,
+                Name = newUser.Name,
+                Password = newUser.Password,
+                UserType = new UserTypeModel
+                {
+                    Id = newUser.UserType.Id,
+                    Name = newUser.UserType.Name,
+                },
+                Address = new AddressModel
+                {
+                    Id = newUser.Address.Id,
+                    Street = newUser.Address.Street,
+                    City = newUser.Address.City,
+                    State = newUser.Address.State,
+                    ZipCode = newUser.Address.ZipCode,
+                },
+            };
 
-            return CreatedAtRoute("Get", new {newUser.Id}, newUser);
+            return CreatedAtRoute("Get", new {userModel.Id}, userModel);
         }
     }
 }

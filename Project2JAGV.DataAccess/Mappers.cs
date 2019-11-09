@@ -1,11 +1,12 @@
-﻿using Project2JAGV.ObjectLogic;
+﻿using Project2JAGV.DataAccess.Interfaces;
+using Project2JAGV.ObjectLogic;
 using System.Linq;
 
 namespace Project2JAGV.DataAccess
 {
-    public class Mappers
+    public class Mappers : IMappers
     {
-        protected Mappers() { }
+        public Mappers() { }
         public Address MapAddress(Entities.Addresses address)
         {
             return new Address
@@ -69,7 +70,7 @@ namespace Project2JAGV.DataAccess
                 Name = ingredientType.Name,
             };
         }
-        //Mapping order ---///
+        
         public Order MapOrder(Entities.Orders order)
         {
             return new Order
@@ -131,7 +132,6 @@ namespace Project2JAGV.DataAccess
                 Id = pizzaIngredient.Id,
                 PizzaId = pizzaIngredient.PizzaId,
                 IngredientId = pizzaIngredient.IngredientId,
-                Ingredient = MapIngredient(pizzaIngredient.Ingredient),
             };
         }
         public User MapUser(Entities.Users user)
@@ -155,6 +155,7 @@ namespace Project2JAGV.DataAccess
                 Password = user.Password,
                 UserTypeId = user.UserType.Id,
                 AddressId = user.Address.Id,
+                // dont think we need these
                 //UserType = MapUserType(user.UserType),
                 //Address = MapAddress(user.Address),
                 Orders = user.Orders.Select(MapOrder).ToList(),

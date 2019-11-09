@@ -27,9 +27,12 @@ namespace Project2JAGV.DataAccess
 
         public async Task AddAddressAsync(Address address)
         {
-            Entities.Addresses addresses = _mapper.MapAddress(address);
-
-            await _context.AddAsync(addresses);
+            Address newAddress = (await GetAddressesAsync(address: address)).FirstOrDefault();
+            if (newAddress == null)
+            {
+                address.Id = 0;
+                await _context.AddAsync(_mapper.MapAddress(address));
+            }
         }
 
         public async Task<ICollection<Address>> GetAddressesAsync(int? id = null, Address address = null)
@@ -47,12 +50,22 @@ namespace Project2JAGV.DataAccess
 
         public async Task AddIngredientAsync(Ingredient ingredient)
         {
-            Ingredients ingredients = _mapper.MapIngredient(ingredient);
+            IngredientType newIngredientType = (await GetIngredientTypesAsync(name: ingredient.IngredientType.Name)).FirstOrDefault();
+            if (newIngredientType == null)
+            {
+                ingredient.IngredientType.Id = 0;
+                await AddIngredientTypeAsync(ingredient.IngredientType);
+            }
 
-            await _context.AddAsync(ingredients);
+            Ingredient newIngredient = (await GetIngredientsAsync(name: ingredient.Name)).FirstOrDefault();
+            if (newIngredient == null)
+            {
+                ingredient.Id = 0;
+                await _context.AddAsync(_mapper.MapIngredient(ingredient));
+            }
         }
 
-        public async Task<ICollection<Ingredient>> GetIngredientsAsync(int? id = null, int? typeId = null)
+        public async Task<ICollection<Ingredient>> GetIngredientsAsync(int? id = null, int? typeId = null, string name = null)
         {
             List<Ingredients> ingredients = await _context.Ingredients.Include(i => i.IngredientType).AsNoTracking().ToListAsync();
 
@@ -60,18 +73,23 @@ namespace Project2JAGV.DataAccess
                 ingredients = ingredients.Where(i => i.Id == id).ToList();
             if (typeId != null)
                 ingredients = ingredients.Where(i => i.TypeId == typeId).ToList();
+            if (name != null)
+                ingredients = ingredients.Where(i => i.Name == name).ToList();
 
             return ingredients.Select(_mapper.MapIngredient).ToList();
         }
 
         public async Task AddIngredientTypeAsync(IngredientType ingredientType)
         {
-            IngredientTypes ingredientTypes = _mapper.MapIngredientType(ingredientType);
-
-            await _context.AddAsync(ingredientTypes);
+            IngredientType newIngredientType = (await GetIngredientTypesAsync(name: ingredientType.Name)).FirstOrDefault();
+            if (newIngredientType == null)
+            {
+                ingredientType.Id = 0;
+                await _context.AddAsync(_mapper.MapIngredientType(ingredientType));
+            }
         }
 
-        public async Task<ICollection<IngredientType>> GetIngredientsTypeAsync(int? id = null, string name = null)
+        public async Task<ICollection<IngredientType>> GetIngredientTypesAsync(int? id = null, string name = null)
         {
             List<IngredientTypes> ingredientTypes = await _context.IngredientTypes.AsNoTracking().ToListAsync();
 
@@ -85,9 +103,19 @@ namespace Project2JAGV.DataAccess
 
         public async Task AddOrderAsync(Order order)
         {
-            Orders orders = _mapper.MapOrder(order);
+            order.Id = 0;
+            foreach (Pizza p in order.Pizzas)
+            {
+                p.Id = 0;
+                p.OrderId = 0;
+                foreach (PizzaIngredient pi in p.PizzaIngredients)
+                {
+                    pi.Id = 0;
+                    pi.PizzaId = 0;
+                }
+            }
 
-            await _context.AddAsync(orders);
+            await _context.AddAsync(_mapper.MapOrder(order));
         }
 
         public async Task<ICollection<Order>> GetOrdersAsync(int? id = null, int? userId = null, int? delivererId = null)
@@ -109,14 +137,20 @@ namespace Project2JAGV.DataAccess
             return orders.Select(_mapper.MapOrder).ToList();
         }
 
+        // dont think we need this
         public async Task AddPizzaAsync(Pizza pizza)
         {
-            Pizzas pizzas = _mapper.MapPizza(pizza);
+            pizza.Id = 0;
+            foreach (PizzaIngredient pi in pizza.PizzaIngredients)
+            {
+                pi.Id = 0;
+                pi.PizzaId = 0;
+            }
 
-            await _context.AddAsync(pizzas);
+            await _context.AddAsync(_mapper.MapPizza(pizza));
         }
 
-        public async Task<ICollection<Pizza>> GetPizzasAsync(int? id = null, string name = null)
+        public async Task<ICollection<Pizza>> GetPizzasAsync(int? id = null, int? orderId = null, string name = null)
         {
             List<Pizzas> pizzas = await _context.Pizzas
                 .Include(p => p.PizzaIngredients)
@@ -126,17 +160,23 @@ namespace Project2JAGV.DataAccess
 
             if (id != null)
                 pizzas = pizzas.Where(p => p.Id == id).ToList();
+            if (orderId != null)
+                pizzas = pizzas.Where(p => p.OrderId == orderId).ToList();
             if (name != null)
                 pizzas = pizzas.Where(p => p.Name == name).ToList();
-
+            
             return pizzas.Select(_mapper.MapPizza).ToList();
         }
 
+        // dont think we need this
         public async Task AddPizzaIngredientAsync(PizzaIngredient pizzaIngredient)
         {
-            PizzaIngredients pizzaIngredients = _mapper.MapPizzaIngredient(pizzaIngredient);
-
-            await _context.AddAsync(pizzaIngredients);
+            PizzaIngredient newPizzaIngredient = (await GetPizzaIngredientsAsync(pizzaId: pizzaIngredient.PizzaId, IngredientId: pizzaIngredient.IngredientId)).FirstOrDefault();
+            if (newPizzaIngredient == null)
+            {
+                pizzaIngredient.Id = 0;
+                await _context.AddAsync(_mapper.MapPizzaIngredient(pizzaIngredient));
+            }
         }
 
         public async Task<ICollection<PizzaIngredient>> GetPizzaIngredientsAsync(int? id = null, int? pizzaId = null, int? IngredientId = null)
@@ -158,9 +198,22 @@ namespace Project2JAGV.DataAccess
 
         public async Task AddUserAsync(User user)
         {
-            Users users = _mapper.MapUser(user);
+            User newUser = (await GetUsersAsync(name: user.Name)).FirstOrDefault();
+            if (newUser != null)
+            {
+                throw new InvalidOperationException("User name allready in use");
+            }
 
-            await _context.AddAsync(users);
+            user.Id = 0;
+            await AddUserTypeAsync(user.UserType);
+            await SaveAsync();
+            user.UserType = (await GetUserTypesAsync(name: user.UserType.Name)).First();
+
+            await AddAddressAsync(user.Address);
+            await SaveAsync();
+            user.Address = (await GetAddressesAsync(address: user.Address)).First();
+
+            await _context.AddAsync(_mapper.MapUser(user));
         }
 
         public async Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null)
@@ -185,9 +238,12 @@ namespace Project2JAGV.DataAccess
 
         public async Task AddUserTypeAsync(UserType userType)
         {
-            UserTypes userTypes = _mapper.MapUserType(userType);
-
-            await _context.AddAsync(userTypes);
+            UserType newUserType = (await GetUserTypesAsync(name: userType.Name)).FirstOrDefault();
+            if (newUserType == null)
+            {
+                userType.Id = 0;
+                await _context.AddAsync(_mapper.MapUserType(userType));
+            }
         }
 
         public async Task<ICollection<UserType>> GetUserTypesAsync(int? id = null, string name = null)

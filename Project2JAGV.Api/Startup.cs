@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Project2JAGV.DataAccess.Entities;
+using Project2JAGV.DataAccess.Interfaces;
 using Project2JAGV.ObjectLogic.Interfaces;
 
 namespace Project2JAGV.Api
@@ -26,6 +27,7 @@ namespace Project2JAGV.Api
             services.AddEntityFrameworkNpgsql().AddDbContext<Project2JAGVContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreString")));
 
+            services.AddScoped<IMappers, DataAccess.Mappers>();
             services.AddScoped<IDataAccess, DataAccess.DataAccess>();
             services.AddControllers();
 
