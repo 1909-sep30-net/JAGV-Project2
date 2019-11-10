@@ -40,8 +40,8 @@ steps:
     azureSubscription: 'Azure subscription 1(1)(1aea89d4-388d-4d50-938f-9c95f509c96d)'
     appType: 'webAppContainer'
     WebAppName: 'jagv'
-    DockerNamespace: 'vdelaguardia/jagvproject2'
-    DockerRepository: 'vdelaguardia/jagvproject2'
+    DockerNamespace: 'vdelaguardia'
+    DockerRepository: 'jagvproject2'
 
 - task: SonarCloudAnalyze@1
 
