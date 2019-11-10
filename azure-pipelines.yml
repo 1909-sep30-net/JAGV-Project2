@@ -38,10 +38,9 @@ steps:
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(1)(1aea89d4-388d-4d50-938f-9c95f509c96d)'
-    appType: 'webAppContainer'
+    appType: 'webApp'
     WebAppName: 'jagv'
-    DockerNamespace: 'vdelaguardia'
-    DockerRepository: 'jagvproject2'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 - task: SonarCloudAnalyze@1
 
