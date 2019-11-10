@@ -1,5 +1,4 @@
-﻿using Project2JAGV.DataAccess.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace Project2JAGV.ObjectLogic.Interfaces
         public Task AddIngredientTypeAsync(IngredientType ingredientType);
         public Task<ICollection<IngredientType>> GetIngredientTypesAsync(int? id = null, string name = null);
         public Task AddOrderAsync(Order order);
-        public Task<ICollection<Order>> GetOrdersAsync(int? id = null, int? userId = null, int? delivererId = null);
+        public Task<ICollection<Order>> GetOrdersAsync(int? id = null, int? userId = null, int? delivererId = null, bool? delivered = null, DateTime? date = null);
         public Task AddPizzaAsync(Pizza pizza);
         public Task<ICollection<Pizza>> GetPizzasAsync(int? id = null, int? orderId = null, string name = null);
         public Task AddPizzaIngredientAsync(PizzaIngredient pizzaIngredient);
@@ -23,6 +22,7 @@ namespace Project2JAGV.ObjectLogic.Interfaces
         public Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null);
         public Task AddUserTypeAsync(UserType userType);
         public Task<ICollection<UserType>> GetUserTypesAsync(int? id = null, string name = null);
+        public Task<ICollection<User>> GetDriversAsync();
         public Task SaveAsync();
 
       

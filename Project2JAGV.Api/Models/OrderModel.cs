@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Project2JAGV.Api.Models
 {
@@ -17,6 +15,6 @@ namespace Project2JAGV.Api.Models
 
         public DateTime Date { get; set; }
 
-        public ICollection<PizzaModel> pizzas { get; set; }
+        public ICollection<PizzaModel> Pizzas { get; set; }
     }
 }

@@ -118,7 +118,7 @@ namespace Project2JAGV.DataAccess
             await _context.AddAsync(_mapper.MapOrder(order));
         }
 
-        public async Task<ICollection<Order>> GetOrdersAsync(int? id = null, int? userId = null, int? delivererId = null)
+        public async Task<ICollection<Order>> GetOrdersAsync(int? id = null, int? userId = null, int? delivererId = null, bool? delivered = null, DateTime? date = null)
         {
             List<Orders> orders = await _context.Orders
                 .Include(o => o.Pizzas)
@@ -133,6 +133,10 @@ namespace Project2JAGV.DataAccess
                 orders = orders.Where(o => o.UserId == userId).ToList();
             if (delivererId != null)
                 orders = orders.Where(o => o.DelivererId == delivererId).ToList();
+            if (delivered != null)
+                orders = orders.Where(o => o.Delivered == delivered).ToList();
+            if (date != null)
+                orders = orders.Where(o => o.Date == date).ToList();
 
             return orders.Select(_mapper.MapOrder).ToList();
         }
@@ -256,6 +260,15 @@ namespace Project2JAGV.DataAccess
                 userTypes = userTypes.Where(ut => ut.Name == name).ToList();
 
             return userTypes.Select(_mapper.MapUserType).ToList();
+        }
+
+        public async Task<ICollection<User>> GetDriversAsync()
+        {
+            ICollection<User> drivers = await GetUsersAsync();
+            
+            drivers = drivers.Where(d => d.UserType.Name == "Driver").ToList();
+
+            return drivers;
         }
 
         public async Task SaveAsync()
