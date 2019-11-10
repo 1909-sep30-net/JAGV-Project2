@@ -41,7 +41,7 @@ namespace Project2JAGV.DataAccess
                 {
                     Id = ingredient.IngredientType.Id,
                     Name = ingredient.IngredientType.Name,
-                }
+                },
             };
         }
         public Entities.Ingredients MapIngredient(Ingredient ingredient)
@@ -52,6 +52,11 @@ namespace Project2JAGV.DataAccess
                 TypeId = ingredient.TypeId,
                 Name = ingredient.Name,
                 Price = ingredient.Price,
+                IngredientType = new Entities.IngredientTypes
+                {
+                    Id = ingredient.IngredientType.Id,
+                    Name = ingredient.IngredientType.Name,
+                },
             };
         }
         public IngredientType MapIngredientType(Entities.IngredientTypes ingredientType)
@@ -156,8 +161,8 @@ namespace Project2JAGV.DataAccess
                 UserTypeId = user.UserType.Id,
                 AddressId = user.Address.Id,
                 // dont think we need these
-                //UserType = MapUserType(user.UserType),
-                //Address = MapAddress(user.Address),
+                UserType = MapUserType(user.UserType),
+                Address = MapAddress(user.Address),
                 Orders = user.Orders.Select(MapOrder).ToList(),
             };
         }
