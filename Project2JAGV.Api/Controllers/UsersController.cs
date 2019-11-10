@@ -10,7 +10,7 @@ using Project2JAGV.ObjectLogic.Interfaces;
 
 namespace Project2JAGV.Api.Controllers
 {
-    [Route("users")]
+    [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -26,7 +26,7 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/Users
         [Route("all")]
-        [HttpGet]
+        [HttpGet("all", Name = "allUsers")]
         public async Task<IEnumerable<UserModel>> Get()
         {
             IEnumerable<User> dbUsers = await db.GetUsersAsync();
@@ -53,29 +53,30 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/Users/5
         [Route("{id}")]
-        [HttpGet(Name = "Get")]
-        public async Task<IEnumerable<UserModel>> Get(int id)
+        [HttpGet(Name = "GetUser")]
+        public async Task<UserModel> Get(int id)
         {
-            IEnumerable<User> dbUsers = await db.GetUsersAsync(id: id);
-            return dbUsers.Select(u => new UserModel
+            User dbUsers = (await db.GetUsersAsync(id: id)).FirstOrDefault();
+
+            return new UserModel
             {
-                Id = u.Id,
-                Name = u.Name,
-                Password = u.Password,
+                Id = dbUsers.Id,
+                Name = dbUsers.Name,
+                Password = dbUsers.Password,
                 UserType = new UserTypeModel
                 {
-                    Id = u.UserType.Id,
-                    Name = u.UserType.Name,
+                    Id = dbUsers.UserType.Id,
+                    Name = dbUsers.UserType.Name,
                 },
                 Address = new AddressModel
                 {
-                    Id = u.Address.Id,
-                    Street = u.Address.Street,
-                    City = u.Address.City,
-                    State = u.Address.State,
-                    ZipCode = u.Address.ZipCode,
+                    Id = dbUsers.Address.Id,
+                    Street = dbUsers.Address.Street,
+                    City = dbUsers.Address.City,
+                    State = dbUsers.Address.State,
+                    ZipCode = dbUsers.Address.ZipCode,
                 },
-            }).ToList();
+            };
         }
 
         // GET: api/Users/5/addressId
@@ -96,7 +97,7 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/Users/5/orders
         [Route("{id}/orders")]
-        [HttpGet(Name = "GetOrders")]
+        [HttpGet(Name = "GetUserOrders")]
         public async Task<IEnumerable<OrderModel>> GetOrders(int id)
         {
             User dbUsers = (await db.GetUsersAsync(id: id)).First();
@@ -106,7 +107,31 @@ namespace Project2JAGV.Api.Controllers
                 UserId = o.UserId,
                 DelivererId = o.DelivererId,
                 Delivered = o.Delivered,
-                Date = o.Date
+                Date = o.Date,
+                Pizzas = o.Pizzas.Select(p => new PizzaModel
+                {
+                    Id = p.Id,
+                    OrderId = p.OrderId,
+                    Name = p.Name,
+                    pi = p.PizzaIngredients.Select(pi => new PizzaIngredientModel
+                    {
+                        Id = pi.Id,
+                        PizzaId = pi.PizzaId,
+                        IngredientId = pi.IngredientId,
+                        Ingredient = new IngredientModel
+                        {
+                            Id = pi.Ingredient.Id,
+                            Name = pi.Ingredient.Name,
+                            Price = pi.Ingredient.Price,
+                            TypeId = pi.Ingredient.TypeId,
+                            IngredientType = new IngredientTypeModel
+                            {
+                                Id = pi.Ingredient.IngredientType.Id,
+                                Name = pi.Ingredient.IngredientType.Name,
+                            },
+                        },
+                    }).ToList(),
+                }).ToList(),
             });
         }
 
@@ -166,6 +191,47 @@ namespace Project2JAGV.Api.Controllers
             };
 
             return CreatedAtRoute("Get", new {userModel.Id}, userModel);
+        }
+
+        // POST: api/Orders
+        [HttpPost("{id}/place-order")]
+        public async Task<ActionResult> Post(int id, [FromBody] OrderModel order)
+        {
+            DateTime newDate = DateTime.Now;
+
+            Order newOrder = new Order
+            {
+                Id = 0,
+                UserId = id,
+                DelivererId = 0,
+                Delivered = false,
+                Date = newDate,
+                Pizzas = order.Pizzas.Select(p => new Pizza
+                {
+                    Id = 0,
+                    OrderId = 0,
+                    Name = p.Name,
+                    PizzaIngredients = p.pi.Select(pi => new PizzaIngredient
+                    {
+                        Id = 0,
+                        PizzaId = 0,
+                        IngredientId = pi.IngredientId,
+                    }).ToList(),
+                }).ToList(),
+            };
+
+            try
+            {
+                await db.AddOrderAsync(newOrder);
+                await db.SaveAsync();
+            }
+            catch
+            {
+                return BadRequest("Something went wrong");
+            }
+
+            newOrder = (await db.GetOrdersAsync(date: newDate)).First();
+            return CreatedAtRoute("Get", new { newOrder.Id }, newOrder);
         }
     }
 }
