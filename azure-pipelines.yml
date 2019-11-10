@@ -34,6 +34,15 @@ steps:
     command: 'test'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(1)(1aea89d4-388d-4d50-938f-9c95f509c96d)'
+    appType: 'webAppContainer'
+    WebAppName: 'jagv'
+    DockerNamespace: 'vdelaguardia/jagvproject2'
+    DockerRepository: 'vdelaguardia/jagvproject2'
+
 - task: SonarCloudAnalyze@1
 
 - task: SonarCloudPublish@1
