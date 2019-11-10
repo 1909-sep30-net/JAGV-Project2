@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Project2JAGV.Api\Project2JAGV.Api.csproj" />
     <ProjectReference Include="..\Project2JAGV.DataAccess\Project2JAGV.DataAccess.csproj" />
     <ProjectReference Include="..\Project2JAGV.ObjectLogic\Project2JAGV.ObjectLogic.csproj" />
   </ItemGroup>
