@@ -51,4 +51,11 @@ steps:
     publishWebProjects: true
     zipAfterPublish: true
 
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(3)(1aea89d4-388d-4d50-938f-9c95f509c96d)'
+    appType: 'webApp'
+    WebAppName: 'jagv'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
