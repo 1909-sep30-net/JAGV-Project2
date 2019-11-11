@@ -14,6 +14,7 @@ namespace Project2JAGV.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IDataAccess db;
+        
         public UsersController(IDataAccess dataAccess)
         {
             db = dataAccess;
