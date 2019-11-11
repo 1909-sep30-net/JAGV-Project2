@@ -220,7 +220,7 @@ namespace Project2JAGV.DataAccess
             await _context.AddAsync(_mapper.MapUser(user));
         }
 
-        public async Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null)
+        public async Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null, string password = null)
         {
             List<Users> users = await _context.Users
                 .Include(u => u.Address)
@@ -236,6 +236,8 @@ namespace Project2JAGV.DataAccess
                 users = users.Where(u => u.Id == id).ToList();
             if (name != null)
                 users = users.Where(u => u.Name == name).ToList();
+            if (password != null)
+                users = users.Where(u => u.Password == password).ToList();
 
             return users.Select(_mapper.MapUser).ToList();
         }

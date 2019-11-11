@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Project2JAGV.Api.Models;
 using Project2JAGV.ObjectLogic;
 using Project2JAGV.ObjectLogic.Interfaces;
@@ -14,22 +13,20 @@ namespace Project2JAGV.Api.Controllers
     public class DriverController : ControllerBase
     {
         private readonly IDataAccess db;
-        private readonly ILogger<DriverController> _logger;
 
-        public DriverController(IDataAccess dataAccess, ILogger<DriverController> logger)
+        public DriverController(IDataAccess dataAccess)
         {
             db = dataAccess;
-            _logger = logger;
-            _logger.LogInformation("Starting");
         }
 
         // GET: api/Driver
         [Route("all")]
         [HttpGet("all", Name = "AllDrivers")]
-        public async Task<IEnumerable<UserModel>> Get()
+        public async Task<ActionResult<IEnumerable<UserModel>>> Get()
         {
             IEnumerable<User> drivers = (await db.GetDriversAsync()).ToList();
-            return drivers.Select(u => new UserModel
+
+            return Ok(drivers.Select(u => new UserModel
             {
                 Id = u.Id,
                 Name = u.Name,
@@ -47,7 +44,7 @@ namespace Project2JAGV.Api.Controllers
                     State = u.Address.State,
                     ZipCode = u.Address.ZipCode,
                 },
-            }).ToList();
+            }).ToList());
         }
 
         // GET: api/Driver/5
