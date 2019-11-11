@@ -27,6 +27,20 @@ namespace Project2JAGV.Api
             services.AddEntityFrameworkNpgsql().AddDbContext<Project2JAGVContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreString")));
 
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngular",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200",
+                                        "http://angpizza.azurewebsites.net/")
+                        .AllowAnyMethod() // not just GET and POST, but allow all methods
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            });
+
             services.AddScoped<IMappers, DataAccess.Mappers>();
             services.AddScoped<IDataAccess, DataAccess.DataAccess>();
             services.AddControllers();
