@@ -15,13 +15,10 @@ namespace Project2JAGV.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IDataAccess db;
-        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IDataAccess dataAccess, ILogger<UsersController> logger)
+        public UsersController(IDataAccess dataAccess)
         {
             db = dataAccess;
-            _logger = logger;
-            _logger.LogInformation("Starting");
         }
 
         // GET: api/Users
