@@ -76,6 +76,8 @@ namespace Project2JAGV.Api
 
             app.UseAuthorization();
 
+            app.UseCors("AllowAngular");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
