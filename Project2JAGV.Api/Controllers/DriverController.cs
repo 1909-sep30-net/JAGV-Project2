@@ -19,34 +19,6 @@ namespace Project2JAGV.Api.Controllers
             db = dataAccess;
         }
 
-        // GET: api/Driver
-        [Route("all")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserModel>>> Get()
-        {
-            IEnumerable<User> drivers = (await db.GetDriversAsync()).ToList();
-
-            return Ok(drivers.Select(u => new UserModel
-            {
-                Id = u.Id,
-                Name = u.Name,
-                Password = u.Password,
-                UserType = new UserTypeModel
-                {
-                    Id = u.UserType.Id,
-                    Name = u.UserType.Name,
-                },
-                Address = new AddressModel
-                {
-                    Id = u.Address.Id,
-                    Street = u.Address.Street,
-                    City = u.Address.City,
-                    State = u.Address.State,
-                    ZipCode = u.Address.ZipCode,
-                },
-            }).ToList());
-        }
-
         // GET: api/Driver/5
         [Route("{id}")]
         [HttpGet]
@@ -78,42 +50,33 @@ namespace Project2JAGV.Api.Controllers
         // GET: api/drivers/5/orders
         [Route("{id}/orders")]
         [HttpGet]
-        public async Task<IEnumerable<OrderModel>> GetOrders(int id)
+        public async Task<ActionResult<IEnumerable<AddressModel>>> GetOrders(int id)
         {
             IEnumerable<Order> orders = (await db.GetOrdersAsync(delivered: false)).ToList();
+            IEnumerable<User> users = (await db.GetUsersAsync()).ToList();
 
-            return orders.Select(o => new OrderModel
+            List<AddressModel> addresses = new List<AddressModel>();
+
+            foreach (Order o in orders)
             {
-                Id = o.Id,
-                UserId = o.UserId,
-                DelivererId = id,
-                Delivered = true,
-                Date = o.Date,
-                Pizzas = o.Pizzas.Select(p => new PizzaModel
+                User u = users.First(u => u.Id == o.UserId);
+
+                o.DelivererId = id;
+                o.Delivered = true;
+                await db.UpdateOrderAsync(o);
+                await db.SaveAsync();
+
+                addresses.Add(new AddressModel
                 {
-                    Id = p.Id,
-                    OrderId = p.OrderId,
-                    Name = p.Name,
-                    pi = p.PizzaIngredients.Select(pi => new PizzaIngredientModel
-                    {
-                        Id = pi.Id,
-                        PizzaId = pi.PizzaId,
-                        IngredientId = pi.IngredientId,
-                        Ingredient = new IngredientModel
-                        {
-                            Id = pi.Ingredient.Id,
-                            Name = pi.Ingredient.Name,
-                            Price = pi.Ingredient.Price,
-                            TypeId = pi.Ingredient.TypeId,
-                            IngredientType = new IngredientTypeModel
-                            {
-                                Id = pi.Ingredient.IngredientType.Id,
-                                Name = pi.Ingredient.IngredientType.Name,
-                            },
-                        },
-                    }).ToList(),
-                }).ToList(),
-            });
+                    Id = u.Address.Id,
+                    Street = u.Address.Street,
+                    City = u.Address.City,
+                    State = u.Address.State,
+                    ZipCode = u.Address.ZipCode,
+                });
+            }
+
+            return addresses;
         }
     }
 }

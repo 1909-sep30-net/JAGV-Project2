@@ -128,17 +128,45 @@ namespace Project2JAGV.DataAccess
                 .AsNoTracking().ToListAsync();
 
             if (id != null)
+            {
                 orders = orders.Where(o => o.Id == id).ToList();
+            }
             if (userId != null)
+            {
                 orders = orders.Where(o => o.UserId == userId).ToList();
+            }
             if (delivererId != null)
+            {
                 orders = orders.Where(o => o.DelivererId == delivererId).ToList();
+            }
             if (delivered != null)
+            {
                 orders = orders.Where(o => o.Delivered == delivered).ToList();
+            }
             if (date != null)
+            {
                 orders = orders.Where(o => o.Date == date).ToList();
+            }
 
             return orders.Select(_mapper.MapOrder).ToList();
+        }
+
+        public async Task UpdateOrderAsync(Order order)
+        {
+            Orders currentOrders = (await _context.Orders
+                .Include(o => o.Pizzas)
+                    .ThenInclude(p => p.PizzaIngredients)
+                        .ThenInclude(pi => pi.Ingredient)
+                            .ThenInclude(i => i.IngredientType)
+                .AsNoTracking().ToListAsync()).FirstOrDefault();
+
+            if (currentOrders == null)
+            {
+                throw new ArgumentException("Order not found in the database");
+            }
+
+            Orders newOrder = _mapper.MapOrder(order);
+            _context.Entry(currentOrders).CurrentValues.SetValues(newOrder);
         }
 
         // dont think we need this
