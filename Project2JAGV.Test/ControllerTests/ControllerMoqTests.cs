@@ -54,7 +54,7 @@ namespace Project2JAGV.Test.ControllerTests
             public Task AddPizzaIngredientAsync(PizzaIngredient pizzaIngredient) { throw new NotImplementedException(); }
             public Task<ICollection<PizzaIngredient>> GetPizzaIngredientsAsync(int? id = null, int? pizzaId = null, int? IngredientId = null) { throw new NotImplementedException(); }
             public Task AddUserAsync(User user) { throw new NotImplementedException(); }
-            public Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null) {
+            public Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null, string password = null) {
 
                 return Task.Run(() =>
                 {
