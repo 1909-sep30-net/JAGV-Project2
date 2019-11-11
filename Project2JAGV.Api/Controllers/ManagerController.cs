@@ -19,24 +19,9 @@ namespace Project2JAGV.Api.Controllers
             db = dataAccess;
         }
 
-        // GET: api/Manager
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Manager/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // GET: api/Users
         [Route("users")]
-        [HttpGet("users", Name = "allUsers")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUsers()
         {
             IEnumerable<User> dbUsers = await db.GetUsersAsync();
