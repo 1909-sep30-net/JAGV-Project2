@@ -50,6 +50,7 @@ namespace Project2JAGV.Test.ControllerTests
             public Task AddOrderAsync(Order order) { throw new NotImplementedException(); }
             public Task<ICollection<Order>> GetOrdersAsync(int? id = null, int? userId = null, int? delivererId = null, bool? delivered = null, DateTime? date = null) { throw new NotImplementedException(); }
             public Task AddPizzaAsync(Pizza pizza) { throw new NotImplementedException(); }
+            public Task UpdateOrderAsync(Order order) { throw new NotImplementedException(); }
             public Task<ICollection<Pizza>> GetPizzasAsync(int? id = null, int? orderId = null, string name = null) { throw new NotImplementedException(); }
             public Task AddPizzaIngredientAsync(PizzaIngredient pizzaIngredient) { throw new NotImplementedException(); }
             public Task<ICollection<PizzaIngredient>> GetPizzaIngredientsAsync(int? id = null, int? pizzaId = null, int? IngredientId = null) { throw new NotImplementedException(); }

@@ -45,5 +45,32 @@ namespace Project2JAGV.Api.Controllers
                 },
             }).ToList();
         }
+
+        [Route("drivers")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetDrivers()
+        {
+            IEnumerable<User> drivers = (await db.GetDriversAsync()).ToList();
+
+            return Ok(drivers.Select(u => new UserModel
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Password = u.Password,
+                UserType = new UserTypeModel
+                {
+                    Id = u.UserType.Id,
+                    Name = u.UserType.Name,
+                },
+                Address = new AddressModel
+                {
+                    Id = u.Address.Id,
+                    Street = u.Address.Street,
+                    City = u.Address.City,
+                    State = u.Address.State,
+                    ZipCode = u.Address.ZipCode,
+                },
+            }).ToList());
+        }
     }
 }
