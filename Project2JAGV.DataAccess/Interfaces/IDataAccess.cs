@@ -19,7 +19,7 @@ namespace Project2JAGV.ObjectLogic.Interfaces
         public Task AddPizzaIngredientAsync(PizzaIngredient pizzaIngredient);
         public Task<ICollection<PizzaIngredient>> GetPizzaIngredientsAsync(int? id = null, int? pizzaId = null, int? IngredientId = null);
         public Task AddUserAsync(User user);
-        public Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null);
+        public Task<ICollection<User>> GetUsersAsync(int? id = null, string name = null, string password = null);
         public Task AddUserTypeAsync(UserType userType);
         public Task<ICollection<UserType>> GetUserTypesAsync(int? id = null, string name = null);
         public Task<ICollection<User>> GetDriversAsync();

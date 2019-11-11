@@ -161,8 +161,8 @@ namespace Project2JAGV.DataAccess
                 UserTypeId = user.UserType.Id,
                 AddressId = user.Address.Id,
                 // dont think we need these
-                UserType = MapUserType(user.UserType),
-                Address = MapAddress(user.Address),
+                //UserType = MapUserType(user.UserType),
+                //Address = MapAddress(user.Address),
                 Orders = user.Orders.Select(MapOrder).ToList(),
             };
         }
