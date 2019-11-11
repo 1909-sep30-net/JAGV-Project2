@@ -33,8 +33,8 @@ namespace Project2JAGV.Api
                 options.AddPolicy("AllowAngular",
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200",
-                                        "http://angpizza.azurewebsites.net/")
+                    builder.WithOrigins("http://localhost:4200","https://jagv.azurewebsites.net",
+                                        "http://angpizza.azurewebsites.net")
                         .AllowAnyMethod() // not just GET and POST, but allow all methods
                         .AllowAnyHeader()
                         .AllowCredentials();
