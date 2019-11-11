@@ -9,13 +9,5 @@ namespace Project2JAGV.Api.Models
 
         [Required]
         public string UserPassword { get; set; }
-
-        [Required]
-        public int UserId { get; set; }
-
-        [Required]
-        public int UserTypeId { get; set; }
-
-        public UserTypeModel UserType { get; set; }
     }
 }
