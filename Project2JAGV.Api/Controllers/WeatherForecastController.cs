@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Project2JAGV.Api.Controllers
 {
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
