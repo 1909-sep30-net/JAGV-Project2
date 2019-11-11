@@ -26,8 +26,7 @@ namespace Project2JAGV.Test.ControllerTests
             var result = controller.Get(5);
 
             // assert
-          
-
+            
             Assert.NotNull(result);
         }
 
