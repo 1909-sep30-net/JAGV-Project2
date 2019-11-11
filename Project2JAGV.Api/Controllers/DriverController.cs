@@ -21,7 +21,7 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/Driver
         [Route("all")]
-        [HttpGet("all", Name = "AllDrivers")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<UserModel>>> Get()
         {
             IEnumerable<User> drivers = (await db.GetDriversAsync()).ToList();
@@ -48,7 +48,8 @@ namespace Project2JAGV.Api.Controllers
         }
 
         // GET: api/Driver/5
-        [HttpGet("{id}", Name = "GetDriver")]
+        [Route("{id}")]
+        [HttpGet]
         public async Task<UserModel> Get(int id)
         {
             User dbUsers = (await db.GetUsersAsync(id: id)).FirstOrDefault();
@@ -76,7 +77,7 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/drivers/5/orders
         [Route("{id}/orders")]
-        [HttpGet(Name = "GetDriverOrders")]
+        [HttpGet]
         public async Task<IEnumerable<OrderModel>> GetOrders(int id)
         {
             IEnumerable<Order> orders = (await db.GetOrdersAsync(delivered: false)).ToList();
