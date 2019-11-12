@@ -43,7 +43,7 @@ namespace Project2JAGV.Api
                 });
             });
 
-            services.AddMvc();
+            
 
             services.AddAuthentication(options =>
             {
