@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project2JAGV.Api.Models;
 using Project2JAGV.ObjectLogic;
 using Project2JAGV.ObjectLogic.Interfaces;
+using Serilog;
 
 namespace Project2JAGV.Api.Controllers
 {
@@ -27,6 +28,7 @@ namespace Project2JAGV.Api.Controllers
             User user = (await db.GetUsersAsync(name: login.UserName, password: login.UserPassword)).FirstOrDefault();
             if (user == null)
             {
+              
                 return NotFound();
             }
 

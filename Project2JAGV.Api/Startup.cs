@@ -72,6 +72,8 @@ namespace Project2JAGV.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthorization();
