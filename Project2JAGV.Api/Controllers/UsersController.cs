@@ -20,11 +20,10 @@ namespace Project2JAGV.Api.Controllers
             db = dataAccess;
         }
 
-        [Route("{userName}")]
-        [HttpGet]
-        public async Task<ActionResult<UserModel>> GetLogin(string userName)
+        [HttpGet("{name}", Name = "GetUser")]
+        public async Task<ActionResult<UserModel>> GetLogin(string name)
         {
-            User user = (await db.GetUsersAsync(name: userName)).FirstOrDefault();
+            User user = (await db.GetUsersAsync(name: name)).FirstOrDefault();
             if (user == null)
             {
 
