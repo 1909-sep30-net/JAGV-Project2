@@ -16,7 +16,8 @@ namespace Project2JAGV.Api
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File("../../../project2LogFile.txt")
+                .WriteTo.File("../../project2LogFile.txt")
+                .WriteTo.Console()
                 .CreateLogger();
 
             try

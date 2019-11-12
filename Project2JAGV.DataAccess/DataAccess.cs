@@ -153,12 +153,7 @@ namespace Project2JAGV.DataAccess
 
         public async Task UpdateOrderAsync(Order order)
         {
-            Orders currentOrders = (await _context.Orders
-                .Include(o => o.Pizzas)
-                    .ThenInclude(p => p.PizzaIngredients)
-                        .ThenInclude(pi => pi.Ingredient)
-                            .ThenInclude(i => i.IngredientType)
-                .AsNoTracking().ToListAsync()).FirstOrDefault();
+            Orders currentOrders = await _context.Orders.FindAsync(order.Id);
 
             if (currentOrders == null)
             {
