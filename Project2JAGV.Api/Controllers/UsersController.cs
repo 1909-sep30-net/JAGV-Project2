@@ -281,7 +281,7 @@ namespace Project2JAGV.Api.Controllers
                 return BadRequest("Something went wrong");
             }
 
-            newOrder = (await db.GetOrdersAsync(date: newDate)).First();
+            //newOrder = (await db.GetOrdersAsync(date: newDate)).First();
             return CreatedAtRoute("Get", new { newOrder.Id }, newOrder);
         }
     }
