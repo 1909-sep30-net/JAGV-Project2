@@ -134,7 +134,6 @@ namespace Project2JAGV.Api.Controllers
                 UserId = o.UserId,
                 DelivererId = o.DelivererId,
                 Delivered = o.Delivered,
-                Date = o.Date,
                 Pizzas = o.Pizzas.Select(p => new PizzaModel
                 {
                     Id = p.Id,

@@ -13,8 +13,6 @@ namespace Project2JAGV.Api.Models
 
         public bool Delivered { get; set; }
 
-        public DateTime Date { get; set; }
-
         public ICollection<PizzaModel> Pizzas { get; set; }
     }
 }
