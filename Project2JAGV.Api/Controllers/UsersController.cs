@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project2JAGV.Api.Models;
 using Project2JAGV.ObjectLogic;
@@ -10,6 +11,7 @@ using Project2JAGV.ObjectLogic.Interfaces;
 namespace Project2JAGV.Api.Controllers
 {
     [Route("api/users")]
+    [Authorize]
     [ApiController]
     public class UsersController : ControllerBase
     {

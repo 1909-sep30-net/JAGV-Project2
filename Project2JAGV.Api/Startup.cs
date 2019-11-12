@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace Project2JAGV.Api
             services.AddEntityFrameworkNpgsql().AddDbContext<Project2JAGVContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreString")));
 
+            //services.AddHttpClient<AuthInfoService>();
 
             services.AddCors(options =>
             {
@@ -41,6 +43,18 @@ namespace Project2JAGV.Api
                 });
             });
 
+            services.AddMvc();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://goldeneagleseth.auth0.com/";
+                options.Audience = "https://jagvbackend/api";
+            });
+
             services.AddScoped<IMappers, DataAccess.Mappers>();
             services.AddScoped<IDataAccess, DataAccess.DataAccess>();
             services.AddControllers();
@@ -49,6 +63,15 @@ namespace Project2JAGV.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+                c.AddSecurityDefinition("BearerAuth", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.ApiKey,
+                    Description = "Bearer authtication scheme with JWT",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header
+                });
+                //c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
         }
 
@@ -59,6 +82,12 @@ namespace Project2JAGV.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
@@ -75,6 +104,9 @@ namespace Project2JAGV.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // 2. Enable authentication middleware
+            app.UseAuthentication();
 
             app.UseCors("AllowAngular");
 
