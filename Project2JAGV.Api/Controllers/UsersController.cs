@@ -26,7 +26,6 @@ namespace Project2JAGV.Api.Controllers
             User user = (await db.GetUsersAsync(name: name)).FirstOrDefault();
             if (user == null)
             {
-
                 return NotFound();
             }
 
