@@ -63,8 +63,15 @@ namespace Project2JAGV.Api.Controllers
 
                 o.DelivererId = id;
                 o.Delivered = true;
-                await db.UpdateOrderAsync(o);
-                await db.SaveAsync();
+                try
+                {
+                    await db.UpdateOrderAsync(o);
+                    await db.SaveAsync();
+                }
+                catch
+                {
+                    return BadRequest("There was a problem delivering orders");
+                }
 
                 addresses.Add(new AddressModel
                 {
@@ -76,7 +83,7 @@ namespace Project2JAGV.Api.Controllers
                 });
             }
 
-            return addresses;
+            return Ok(addresses);
         }
     }
 }

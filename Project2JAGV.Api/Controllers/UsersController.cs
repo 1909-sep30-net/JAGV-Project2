@@ -66,7 +66,7 @@ namespace Project2JAGV.Api.Controllers
 
             if (user == null)
             {
-                Log.Error("User not found");
+                Log.Error("User Id: {id} could not be found", id);
                 return NotFound();
             }
 
