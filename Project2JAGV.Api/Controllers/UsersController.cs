@@ -21,11 +21,11 @@ namespace Project2JAGV.Api.Controllers
             db = dataAccess;
         }
 
-        [Route("login")]
-        [HttpGet]
-        public async Task<ActionResult<UserModel>> GetLogin(LoginModel login)
+        [Route("login/{name}")]
+        [HttpGet("login/{name}", Name = "GetLogin")]
+        public async Task<ActionResult<UserModel>> GetLogin(string name)
         {
-            User user = (await db.GetUsersAsync(name: login.UserName, password: login.UserPassword)).FirstOrDefault();
+            User user = (await db.GetUsersAsync(name: name)).FirstOrDefault();
             if (user == null)
             {
               
@@ -57,7 +57,7 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/Users/5
         [Route("{id}")]
-        [HttpGet]
+        [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<UserModel>> Get(int id)
         {
             User user = (await db.GetUsersAsync(id: id)).FirstOrDefault();
@@ -90,7 +90,7 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/Users/5/addressId
         [Route("{id}/address")]
-        [HttpGet]
+        [HttpGet("{id}/address", Name = "GetAddress")]
         public async Task<ActionResult<AddressModel>> GetAddress(int id)
         {
             User user = (await db.GetUsersAsync(id: id)).FirstOrDefault();
@@ -112,7 +112,7 @@ namespace Project2JAGV.Api.Controllers
 
         // GET: api/Users/5/orders
         [Route("{id}/orders")]
-        [HttpGet]
+        [HttpGet("{id}/orders", Name = "GetOrders")]
         public async Task<ActionResult<IEnumerable<OrderModel>>> GetOrders(int id)
         {
             User user = (await db.GetUsersAsync(id: id)).FirstOrDefault();
@@ -156,7 +156,7 @@ namespace Project2JAGV.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] UserModel user)
+        public async Task<ActionResult> PostUser([FromBody] UserModel user)
         {
             User newUser = new User
             {
@@ -213,7 +213,7 @@ namespace Project2JAGV.Api.Controllers
         }
 
         [Route("ingredients")]
-        [HttpGet]
+        [HttpGet("ingredients", Name = "GetIngredients")]
         public async Task<ActionResult<IEnumerable<IngredientModel>>> GetIngredients()
         {
             IEnumerable<Ingredient> ingredients = await db.GetIngredientsAsync();
@@ -236,8 +236,8 @@ namespace Project2JAGV.Api.Controllers
 
         // POST: api/Orders
         [Route("{id}/place-order")]
-        [HttpPost]
-        public async Task<ActionResult> Post(int id, [FromBody] OrderModel order)
+        [HttpPost("{id}/place-order", Name = "PostOrder")]
+        public async Task<ActionResult> PostOrder(int id, [FromBody] OrderModel order)
         {
             DateTime newDate = DateTime.Now;
 
