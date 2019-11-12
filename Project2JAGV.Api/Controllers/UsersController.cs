@@ -28,7 +28,8 @@ namespace Project2JAGV.Api.Controllers
             User user = (await db.GetUsersAsync(name: name)).FirstOrDefault();
             if (user == null)
             {
-              
+                Log.Error("Username: {name} not found");
+
                 return NotFound();
             }
 
@@ -52,6 +53,7 @@ namespace Project2JAGV.Api.Controllers
                 }
             };
 
+            Log.Information("Got login for {name}");
             return Ok(userModel);
         }
 
@@ -64,9 +66,11 @@ namespace Project2JAGV.Api.Controllers
 
             if (user == null)
             {
+                Log.Error("User not found");
                 return NotFound();
             }
 
+            Log.Information("Got user");
             return Ok(new UserModel
             {
                 Id = user.Id,
@@ -97,9 +101,11 @@ namespace Project2JAGV.Api.Controllers
 
             if (user == null)
             {
+                Log.Error("Address not found");
                 return NotFound();
             }
 
+            Log.Information("Found user address");
             return Ok(new AddressModel
             {
                 Id = user.Address.Id,
@@ -118,6 +124,7 @@ namespace Project2JAGV.Api.Controllers
             User user = (await db.GetUsersAsync(id: id)).FirstOrDefault();
             if (user == null)
             {
+                Log.Error("Orders not found");
                 return NotFound();
             }
 
@@ -209,6 +216,7 @@ namespace Project2JAGV.Api.Controllers
                 },
             };
 
+            Log.Information("New user {name}");
             return CreatedAtRoute("Get", new { userModel.Id }, userModel);
         }
 
@@ -231,6 +239,7 @@ namespace Project2JAGV.Api.Controllers
                 }
             });
 
+            Log.Information("Got all ingredients");
             return Ok(ingredientModels);
         }
 
@@ -269,6 +278,7 @@ namespace Project2JAGV.Api.Controllers
             }
             catch
             {
+                Log.Error("Unable to add order");
                 return BadRequest("Something went wrong");
             }
 
