@@ -244,23 +244,23 @@ namespace Project2JAGV.Api.Controllers
         }
 
         // POST: api/Orders
-        [Route("{id}/place-order")]
-        [HttpPost("{id}/place-order", Name = "PostOrder")]
-        public async Task<ActionResult> PostOrder(int id, [FromBody] OrderModel order)
+        [Route("orders/place-order")]
+        [HttpPost("orders/place-order", Name = "PostOrder")]
+        public async Task<ActionResult> PostOrder([FromBody] OrderModel order)
         {
             DateTime newDate = DateTime.Now;
 
             Order newOrder = new Order
             {
                 Id = 0,
-                UserId = id,
+                UserId = order.UserId,
                 DelivererId = 0,
                 Delivered = false,
                 Date = newDate,
                 Pizzas = order.Pizzas.Select(p => new Pizza
                 {
                     Id = 0,
-                    OrderId = 0,
+                    OrderId = order.UserId,
                     Name = p.Name,
                     PizzaIngredients = p.pi.Select(pi => new PizzaIngredient
                     {
