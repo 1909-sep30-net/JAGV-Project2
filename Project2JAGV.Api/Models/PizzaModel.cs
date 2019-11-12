@@ -10,6 +10,6 @@ namespace Project2JAGV.Api.Models
 
         public string Name { get; set; }
 
-        public ICollection<PizzaIngredientModel> pi { get; set; }
+        public ICollection<PizzaIngredientModel> PizzaIngredients { get; set; }
     }
 }

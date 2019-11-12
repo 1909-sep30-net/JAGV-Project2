@@ -139,7 +139,7 @@ namespace Project2JAGV.Api.Controllers
                     Id = p.Id,
                     OrderId = p.OrderId,
                     Name = p.Name,
-                    pi = p.PizzaIngredients.Select(pi => new PizzaIngredientModel
+                    PizzaIngredients = p.PizzaIngredients.Select(pi => new PizzaIngredientModel
                     {
                         Id = pi.Id,
                         PizzaId = pi.PizzaId,
@@ -253,7 +253,7 @@ namespace Project2JAGV.Api.Controllers
             {
                 Id = 0,
                 UserId = order.UserId,
-                DelivererId = 0,
+                DelivererId = order.DelivererId,
                 Delivered = false,
                 Date = newDate,
                 Pizzas = order.Pizzas.Select(p => new Pizza
@@ -261,7 +261,7 @@ namespace Project2JAGV.Api.Controllers
                     Id = 0,
                     OrderId = order.UserId,
                     Name = p.Name,
-                    PizzaIngredients = p.pi.Select(pi => new PizzaIngredient
+                    PizzaIngredients = p.PizzaIngredients.Select(pi => new PizzaIngredient
                     {
                         Id = 0,
                         PizzaId = 0,
